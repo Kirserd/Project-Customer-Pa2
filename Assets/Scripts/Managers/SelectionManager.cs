@@ -68,15 +68,13 @@ public class SelectionManager : MonoBehaviour
         }
 
         if (selectables is null || selectables.Count == 0)
-            return;
-
-        ISelectable closestSelectable = ClosestFrom(selectables.ToArray());
-        if (Vector3.Distance(closestSelectable.GameObject.transform.position, point) < radius)
         {
-            SetSelectedObject(closestSelectable);
+            SetSelectedObject(null);
             return;
         }
-        SetSelectedObject(null);
+
+        ISelectable closestSelectable = ClosestFrom(selectables.ToArray());
+        SetSelectedObject(closestSelectable);
     }
 
     private ISelectable ClosestFrom(ISelectable[] selectables)
