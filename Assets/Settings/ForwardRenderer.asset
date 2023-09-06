@@ -64,10 +64,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   outlineSettings:
-    outlineColor: {r: 0.1509434, g: 0, b: 0, a: 0.69803923}
-    outlineScale: 2
-    depthThreshold: 3
-    robertsCrossMultiplier: 75
+    outlineColor: {r: 0.102, g: 0, b: 0.128, a: 0.69803923}
+    outlineScale: 1
+    depthThreshold: 0.2
+    robertsCrossMultiplier: 60
     normalThreshold: 0.45
     steepAngleThreshold: 0
     steepAngleMultiplier: 21

@@ -20,11 +20,11 @@ MonoBehaviour:
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 1.5
     min: 0
   scatter:
     m_OverrideState: 0
-    m_Value: 0.7
+    m_Value: 0.624
     min: 0
     max: 1
   clamp:
@@ -46,11 +46,11 @@ MonoBehaviour:
     min: 0
     max: 16
   dirtTexture:
-    m_OverrideState: 0
-    m_Value: {fileID: 0}
+    m_OverrideState: 1
+    m_Value: {fileID: 2800000, guid: 5d0c56cfaa3f1744690d64256d0778da, type: 3}
   dirtIntensity:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 3
     min: 0
 --- !u!114 &-2972193242571572410
 MonoBehaviour:
@@ -78,7 +78,7 @@ MonoBehaviour:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.07531381
+          value: 0.02928871
           inSlope: 0.69456124
           outSlope: 0.69456124
           tangentMode: 0
@@ -117,10 +117,10 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.92168677
-          value: 1
-          inSlope: 1.4115267
-          outSlope: 1.4115267
+          time: 0.9559118
+          value: 0.9958159
+          inSlope: 1.2179216
+          outSlope: 1.2179216
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.9799197
+          time: 0.98196393
           value: 1
           inSlope: 1
           outSlope: 0
@@ -171,9 +171,9 @@ MonoBehaviour:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.104602516
-          inSlope: 0.3472804
-          outSlope: 0.3472804
+          value: 0.06694561
+          inSlope: 0.47722617
+          outSlope: 0.47722617
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -256,34 +256,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: -4376114894340955512}
-  - {fileID: 1638180121758353660}
   - {fileID: 8296814180742488519}
   - {fileID: 2291685585908764192}
   - {fileID: -2972193242571572410}
---- !u!114 &1638180121758353660
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb60a22f311433c4c962b888d1393f88, type: 3}
-  m_Name: PaniniProjection
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  distance:
-    m_OverrideState: 1
-    m_Value: 0.1
-    min: 0
-    max: 1
-  cropToFit:
-    m_OverrideState: 1
-    m_Value: 1
-    min: 0
-    max: 1
 --- !u!114 &2291685585908764192
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -300,7 +275,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 2
 --- !u!114 &8296814180742488519
 MonoBehaviour:
   m_ObjectHideFlags: 3

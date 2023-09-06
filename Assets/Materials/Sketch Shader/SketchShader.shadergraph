@@ -14,9 +14,6 @@
         },
         {
             "m_Id": "48e464ae1e5e47cca5356888e019ddd5"
-        },
-        {
-            "m_Id": "faddbc22336e41b6afd22fcd492436cb"
         }
     ],
     "m_Keywords": [],
@@ -2599,7 +2596,7 @@
     },
     "m_Name": "CrossHatchTexture",
     "m_DefaultReferenceName": "Texture2D_2bde4d169aee48779eee57cd4bba856f",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_CrossHatchTex",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -2705,7 +2702,7 @@
     },
     "m_Name": "Color",
     "m_DefaultReferenceName": "Color_2de178b477c6422b866692d67ea3125c",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_Color",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -3566,7 +3563,7 @@
     },
     "m_Name": "CrossHatchScale",
     "m_DefaultReferenceName": "Vector1_48e464ae1e5e47cca5356888e019ddd5",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_CrossHatchScale",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -8422,30 +8419,6 @@
 }
 
 {
-    "m_SGVersion": 3,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
-    "m_ObjectId": "faddbc22336e41b6afd22fcd492436cb",
-    "m_Guid": {
-        "m_GuidSerialized": "82f28eab-c3a3-447a-b75e-5ba72f9b1267"
-    },
-    "m_Name": "OutlineColor",
-    "m_DefaultReferenceName": "Color_faddbc22336e41b6afd22fcd492436cb",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": {
-        "r": 0.0,
-        "g": 0.0,
-        "b": 0.0,
-        "a": 0.0
-    },
-    "m_ColorMode": 0
-}
-
-{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicValueMaterialSlot",
     "m_ObjectId": "fbf4e1fbfa264a56a2306d9164ca462c",
@@ -8572,9 +8545,9 @@
     "m_Guid": {
         "m_GuidSerialized": "b9aa7761-11eb-4c47-924b-a565114f9f88"
     },
-    "m_Name": "_MainTex",
+    "m_Name": "MainTex",
     "m_DefaultReferenceName": "Texture2D_feac046fd35d454d96eab3c6c01e6022",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_MainTex",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
