@@ -12,7 +12,6 @@ public class Dad : MonoBehaviour
     private float _castRadius;
     [SerializeField]
     private Vector3 _castOrigin;
-
     private IInteractable _closestInteractable;
 
     [HideInInspector]
@@ -27,8 +26,28 @@ public class Dad : MonoBehaviour
             _closestInteractable = value;
         }
     }
+    #region StateMachine
+    public PlayerStateMachine PlayerStateMachine { get; private set; }
+    public MovingState MovingState { get; private set; }
+    public PhoneState PhoneState { get; private set; }
+    public DialogState DialogState { get; private set; }
+    public TaskState TaskState { get; private set; }
+    #endregion
 
-    private void Start() => RefreshSubscriptions();
+    private void Awake()
+    {
+        PlayerStateMachine = new PlayerStateMachine();
+
+        MovingState = new MovingState(this, PlayerStateMachine, gameObject.GetComponent<Movement>());
+        PhoneState = new PhoneState(this, PlayerStateMachine);
+        DialogState = new DialogState(this, PlayerStateMachine);
+        TaskState = new TaskState(this, PlayerStateMachine);
+    }
+    private void Start() 
+    {
+        PlayerStateMachine.Initialize(MovingState);
+        RefreshSubscriptions(); 
+    }
 
     public void RefreshSubscriptions()
     {
@@ -39,7 +58,10 @@ public class Dad : MonoBehaviour
     {
         GetClosestInteractable();
     }
-
+    private void Update()
+    {
+        PlayerStateMachine.UpdateState();
+    }
     private void GetClosestInteractable()
     {
         SelectionManager selectionManager = SelectionManager.Instance;
