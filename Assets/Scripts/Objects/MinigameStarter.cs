@@ -15,7 +15,6 @@ public class MinigameStarter : MonoBehaviour, IInteractable
             return;
 
         renderer.material.SetColor("_Color", Color.white);
-        Debug.Log("deselected");
     }
 
     public virtual void Interact(){}
@@ -28,6 +27,5 @@ public class MinigameStarter : MonoBehaviour, IInteractable
             return;
 
         renderer.material.SetColor("_Color", SelectionManager.Instance.SelectionColor);
-        Debug.Log("selected");
     }
 }

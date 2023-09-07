@@ -14,7 +14,7 @@ public class CursorManager : MonoBehaviour
 
     [Header("Parameters")]
     [SerializeField]
-    private SerializableDictionary<string, Sprite> _cursorDictionary = new SerializableDictionary<string, Sprite>();
+    private SerializableDictionary<string, Texture2D> _cursorDictionary = new SerializableDictionary<string, Texture2D>();
 
     private Texture2D _cursorTexture;
 
@@ -35,7 +35,7 @@ public class CursorManager : MonoBehaviour
     /// </summary>
     /// <param name="key">The key associated with the cursor.</param>
     /// <param name="cursorTexture">The sprite to be used as the cursor.</param>
-    public void AddCursor(string key, Sprite cursorTexture)
+    public void AddCursor(string key, Texture2D cursorTexture)
     {
         if (_cursorDictionary.ContainsKey(key))
             _cursorDictionary[key] = cursorTexture;
@@ -55,35 +55,11 @@ public class CursorManager : MonoBehaviour
     /// <param name="key">The key of the cursor to be set.</param>
     public void SetCursor(string key)
     {
-        if (_cursorDictionary.ContainsKey(key))
-            StartCoroutine(SetCursorAsync(key));
-    }
+        if (!_cursorDictionary.ContainsKey(key))
+            return;
 
-    private IEnumerator SetCursorAsync(string key)
-    {
-        Sprite cursorSprite = _cursorDictionary[key];
-        yield return StartCoroutine(SpriteToTexture2DAsync(cursorSprite, texture =>
-        {
-            _cursorTexture = texture;
-            Cursor.SetCursor(_cursorTexture, Vector2.zero, CursorMode.Auto);
-        }));
-    }
-    private IEnumerator SpriteToTexture2DAsync(Sprite sprite, System.Action<Texture2D> onComplete)
-    {
-        if (sprite == null)
-        {
-            onComplete?.Invoke(null);
-            yield break;
-        }
-
-        Texture2D texture = new Texture2D((int)sprite.textureRect.width, (int)sprite.textureRect.height, TextureFormat.RGBA32, false, true);
-        texture.filterMode = sprite.texture.filterMode;
-        texture.SetPixels(sprite.texture.GetPixels((int)sprite.textureRect.x, (int)sprite.textureRect.y, (int)sprite.textureRect.width, (int)sprite.textureRect.height));
-        texture.Apply();
-
-        yield return null;
-
-        onComplete?.Invoke(texture);
+        _cursorTexture = _cursorDictionary[key];
+        Cursor.SetCursor(_cursorTexture, Vector2.zero, CursorMode.Auto);
     }
 
     /// <summary>

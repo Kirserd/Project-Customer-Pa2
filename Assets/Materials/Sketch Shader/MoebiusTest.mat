@@ -53,6 +53,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_48e464ae1e5e47cca5356888e019ddd5: 20
+    - Vector1_e3f70e8b6dc94543b7186e3c146d98bb: 14
+    - Vector1_fbdbc51b0f764cebbe5cded1c3649a92: 0.72
     - _CrossHatchScale: 20
     m_Colors:
     - Color_2de178b477c6422b866692d67ea3125c: {r: 1, g: 1, b: 1, a: 1}
