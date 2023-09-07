@@ -6,9 +6,13 @@ public interface ISelectable
 {
     ///<summary>
     /// The GameObject associated with the interactable object.
-    /// Implementing classes must provide the GameObject property.
     ///</summary>
     GameObject GameObject { get; }
+
+    ///<summary>
+    /// Boolean which states whether selection should be enabled or disabled.
+    ///</summary>
+    bool IsActive { get; }
 
     ///<summary>
     /// Method that defines selection behavior of the object.

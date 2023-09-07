@@ -58,9 +58,10 @@ public class ScreenSpaceOutlines : ScriptableRendererFeature {
         private readonly List<ShaderTagId> shaderTagIdList;
         private readonly Material normalsMaterial;
         private readonly Material occludersMaterial;
-
+        [System.Obsolete]
         private readonly RenderTargetHandle normals;
 
+        [System.Obsolete]
         public ViewSpaceNormalsTexturePass(RenderPassEvent renderPassEvent, LayerMask layerMask, LayerMask occluderLayerMask, ViewSpaceNormalsTextureSettings settings) {
             this.renderPassEvent = renderPassEvent;
             this.normalsTextureSettings = settings;
