@@ -13,45 +13,33 @@ MonoBehaviour:
   m_Name: Bloom
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 0
   threshold:
     m_OverrideState: 1
-    m_Value: 1.1
-    min: 0
+    m_Value: 1.3
   intensity:
     m_OverrideState: 1
-    m_Value: 1.1
-    min: 0
+    m_Value: 0.5
   scatter:
     m_OverrideState: 0
-    m_Value: 0.624
-    min: 0
-    max: 1
+    m_Value: 0.263
   clamp:
     m_OverrideState: 0
     m_Value: 65472
-    min: 0
   tint:
     m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
-    hdr: 0
-    showAlpha: 0
-    showEyeDropper: 1
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
   skipIterations:
     m_OverrideState: 0
     m_Value: 1
-    min: 0
-    max: 16
   dirtTexture:
     m_OverrideState: 1
     m_Value: {fileID: 2800000, guid: 5d0c56cfaa3f1744690d64256d0778da, type: 3}
   dirtIntensity:
     m_OverrideState: 1
     m_Value: 20
-    min: 0
 --- !u!114 &-2972193242571572410
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -65,7 +53,6 @@ MonoBehaviour:
   m_Name: ColorCurves
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 0
   master:
     m_OverrideState: 1
     m_Value:
@@ -78,9 +65,9 @@ MonoBehaviour:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.02928871
-          inSlope: 0.69456124
-          outSlope: 0.69456124
+          value: 0.046153843
+          inSlope: 0.70085466
+          outSlope: 0.70085466
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -88,8 +75,8 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 1
-          outSlope: 1
+          inSlope: 0.8009766
+          outSlope: 0.8009766
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -109,7 +96,7 @@ MonoBehaviour:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.062761486
+          value: 0.04102564
           inSlope: 0.80141586
           outSlope: 0.80141586
           tangentMode: 0
@@ -171,7 +158,7 @@ MonoBehaviour:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.06694561
+          value: 0.08205128
           inSlope: 0.47722617
           outSlope: 0.47722617
           tangentMode: 0
@@ -193,7 +180,7 @@ MonoBehaviour:
   hueVsHue:
     m_OverrideState: 0
     m_Value:
-      <length>k__BackingField: 0
+      <length>k__BackingField: 2
       m_Loop: 1
       m_ZeroValue: 0.5
       m_Range: 1
@@ -219,26 +206,62 @@ MonoBehaviour:
   satVsSat:
     m_OverrideState: 0
     m_Value:
-      <length>k__BackingField: 1
+      <length>k__BackingField: 2
       m_Loop: 0
       m_ZeroValue: 0.5
       m_Range: 1
       m_Curve:
         serializedVersion: 2
-        m_Curve: []
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0.72307694
+          inSlope: 1.7400532
+          outSlope: 1.7400532
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
   lumVsSat:
     m_OverrideState: 0
     m_Value:
-      <length>k__BackingField: 0
+      <length>k__BackingField: 2
       m_Loop: 0
       m_ZeroValue: 0.5
       m_Range: 1
       m_Curve:
         serializedVersion: 2
-        m_Curve: []
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0.6666666
+          inSlope: -1.559966
+          outSlope: -1.559966
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0.48205125
+          inSlope: 0.087606825
+          outSlope: 0.087606825
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -272,7 +295,6 @@ MonoBehaviour:
   m_Name: Tonemapping
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
     m_Value: 2
@@ -289,20 +311,15 @@ MonoBehaviour:
   m_Name: FilmGrain
   m_EditorClassIdentifier: 
   active: 1
-  m_AdvancedMode: 0
   type:
     m_OverrideState: 1
     m_Value: 0
   intensity:
     m_OverrideState: 1
     m_Value: 0.5
-    min: 0
-    max: 1
   response:
     m_OverrideState: 1
     m_Value: 0.8
-    min: 0
-    max: 1
   texture:
     m_OverrideState: 0
     m_Value: {fileID: 0}
