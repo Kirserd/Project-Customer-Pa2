@@ -14,6 +14,12 @@ public class Dad : MonoBehaviour
     private Vector3 _castOrigin;
     private IInteractable _closestInteractable;
 
+    [Header("Gauges")]
+    [SerializeField]
+    private float _chorePoints;
+    [SerializeField]
+    private float _gamePoints;
+
     [HideInInspector]
     public IInteractable ClosestInteractable
     {
@@ -47,6 +53,14 @@ public class Dad : MonoBehaviour
     {
         PlayerStateMachine.Initialize(MovingState);
         RefreshSubscriptions(); 
+    }
+
+    public void AddPoints(bool isGame, byte amount)
+    {
+        if (isGame)
+            _gamePoints += amount;
+        else
+            _chorePoints += amount;
     }
 
     public void RefreshSubscriptions()
