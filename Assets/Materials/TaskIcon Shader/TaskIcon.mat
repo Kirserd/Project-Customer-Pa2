@@ -30,7 +30,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0.5
+    - _Opacity: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _HDRColor: {r: 4.0472007, g: 1.6999009, b: 0, a: 1}
+    - _HDRColor: {r: 2.5193918, g: 1.0684332, b: 0, a: 1}
   m_BuildTextureStacks: []

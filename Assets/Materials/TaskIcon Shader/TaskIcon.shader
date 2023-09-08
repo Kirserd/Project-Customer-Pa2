@@ -3,14 +3,15 @@ Shader "Unlit/SpriteUnlit"
     Properties
     {
         _MainTex("Texture", 2D) = "white" {}
-        [HDR]_HDRColor("HDR Color", Color) = (1, 1, 1, 1)
-        _AlphaClip("Alpha Clip", Range(0, 1)) = 0.5
+        [HDR] _HDRColor("HDR Color", Color) = (1, 1, 1, 1)
+        _Opacity("Opacity", Range(0, 1)) = 1.0
     }
 
         SubShader
         {
             Tags { "Queue" = "Overlay+1" "RenderType" = "Transparent" }
             ZTest Always
+            Blend SrcAlpha OneMinusSrcAlpha
             LOD 100
 
             Pass
@@ -34,9 +35,8 @@ Shader "Unlit/SpriteUnlit"
 
                 sampler2D _MainTex;
                 float4 _MainTex_ST;
-                float4 _Color;
                 float4 _HDRColor;
-                float _AlphaClip;
+                float _Opacity;
 
                 v2f vert(appdata_t v)
                 {
@@ -49,7 +49,7 @@ Shader "Unlit/SpriteUnlit"
                 half4 frag(v2f i) : SV_Target
                 {
                     half4 col = tex2D(_MainTex, i.uv) * _HDRColor;
-                    clip(col.a - _AlphaClip);
+                    col.a *= _Opacity;
                     return col;
                 }
                 ENDCG
