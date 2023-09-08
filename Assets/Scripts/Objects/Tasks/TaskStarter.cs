@@ -13,7 +13,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
     public bool IsActive => _isActive;
     private bool _isActive;
 
-    [SerializeField]
+    [SerializeReference]
     protected Task _task;
 
     [SerializeField]

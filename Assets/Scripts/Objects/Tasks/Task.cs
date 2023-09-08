@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+
 public abstract class Task
 {
     public delegate void OnCompletedHandler(bool result);
