@@ -90,10 +90,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
         OnSelectionStateChanged?.Invoke(false);
     }
 
-    public virtual void Interact()
-    {
-        _task.Start(this);
-    }
+    public virtual void Interact() => _task.Start(this);
 
     public void Select()
     {

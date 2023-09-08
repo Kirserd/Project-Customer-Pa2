@@ -25,7 +25,10 @@ public abstract class Task
         {
             _dad = GameObject.FindGameObjectWithTag("Player").GetComponent<Dad>();
             _dad.AddPoints(_data.IsGame, _data.Points);
+            _caller.SetAvailabilityState(TaskStarter.Availability.Done);
         }
+        else
+            _caller.SetAvailabilityState(TaskStarter.Availability.Late);
     }
     public virtual void Start(TaskStarter caller)
     {
