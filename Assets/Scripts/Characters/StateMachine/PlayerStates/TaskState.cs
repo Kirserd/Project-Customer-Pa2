@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class TaskState : PlayerState
 {
-    public TaskState(Dad player, PlayerStateMachine stateMachine) : base(player, stateMachine)
-    {
-    }
+    private TaskData _data;
+    public TaskState(Dad player, TaskData data) : base(player) => _data = data;
     public override void EnterState()
     {
         base.EnterState();

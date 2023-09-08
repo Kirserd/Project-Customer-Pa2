@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PhoneState : PlayerState
 {
-    public PhoneState(Dad player, PlayerStateMachine stateMachine) : base(player, stateMachine)
+    public PhoneState(Dad player) : base(player)
     {
     }
 

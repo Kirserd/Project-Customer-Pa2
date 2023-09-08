@@ -37,17 +37,15 @@ public class Dad : MonoBehaviour
     public MovingState MovingState { get; private set; }
     public PhoneState PhoneState { get; private set; }
     public DialogState DialogState { get; private set; }
-    public TaskState TaskState { get; private set; }
     #endregion
 
     private void Awake()
     {
         PlayerStateMachine = new PlayerStateMachine();
 
-        MovingState = new MovingState(this, PlayerStateMachine, gameObject.GetComponent<Movement>());
-        PhoneState = new PhoneState(this, PlayerStateMachine);
-        DialogState = new DialogState(this, PlayerStateMachine);
-        TaskState = new TaskState(this, PlayerStateMachine);
+        MovingState = new MovingState(this, gameObject.GetComponent<Movement>());
+        PhoneState = new PhoneState(this);
+        DialogState = new DialogState(this);
     }
     private void Start() 
     {

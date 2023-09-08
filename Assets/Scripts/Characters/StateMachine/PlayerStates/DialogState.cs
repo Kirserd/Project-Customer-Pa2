@@ -1,6 +1,6 @@
 public class DialogState : PlayerState
 {
-    public DialogState(Dad player, PlayerStateMachine stateMachine) : base(player, stateMachine)
+    public DialogState(Dad player) : base(player)
     {
     }
 

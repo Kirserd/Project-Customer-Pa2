@@ -1,7 +1,7 @@
 public class MovingState : PlayerState
 {
     public Movement Movement { get; private set; }
-    public MovingState(Dad player, PlayerStateMachine stateMachine, Movement movement) : base(player, stateMachine)
+    public MovingState(Dad player, Movement movement) : base(player)
     {
         Movement = movement;
     }
@@ -9,10 +9,12 @@ public class MovingState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        Movement.enabled = true;
     }
 
     public override void ExitState()
     {
         base.ExitState();
+        Movement.enabled = false;
     }
 }

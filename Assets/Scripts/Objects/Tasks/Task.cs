@@ -15,7 +15,7 @@ public abstract class Task
         OnCompleted += ctx => HandleOnCompleted(ctx);
         _dad = GameObject.FindGameObjectWithTag("Player").GetComponent<Dad>();
     }
-    private void HandleOnStarted() => _dad.PlayerStateMachine.UpdateState(_dad.TaskState);
+    private void HandleOnStarted() => _dad.PlayerStateMachine.UpdateState(new TaskState(_dad, _data));
     private void HandleOnCompleted(bool result)
     {
         if (result)
@@ -24,7 +24,6 @@ public abstract class Task
             _dad.AddPoints(_data.IsGame, _data.Points);
         }
     }
-
     public virtual void Start(TaskStarter caller) => OnStarted?.Invoke();
     public virtual void Stop(TaskStarter caller, bool result) => OnCompleted?.Invoke(result);
     public abstract void ForcefullyStop();
