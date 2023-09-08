@@ -8,7 +8,10 @@ public abstract class Task
     public OnStartedHandler OnStarted;
 
     protected TaskData _data;
+    
     private Dad _dad;
+    private TaskStarter _caller;
+
     protected Task()
     {
         OnStarted += HandleOnStarted;
@@ -24,7 +27,15 @@ public abstract class Task
             _dad.AddPoints(_data.IsGame, _data.Points);
         }
     }
-    public virtual void Start(TaskStarter caller) => OnStarted?.Invoke();
+    public virtual void Start(TaskStarter caller)
+    {
+        if (_caller == caller)
+            return;
+
+        _caller = caller;
+        OnStarted?.Invoke();
+    }
     public virtual void Stop(TaskStarter caller, bool result) => OnCompleted?.Invoke(result);
     public abstract void ForcefullyStop();
+    public void Reset() => _caller = null;
 }
