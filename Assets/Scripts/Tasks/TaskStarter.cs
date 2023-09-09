@@ -14,7 +14,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
     private bool _isActive;
 
     [SerializeReference]
-    protected Task _task;
+    public TaskData Data;
 
     [SerializeField]
     private TaskIcon _iconPrefab;
@@ -90,7 +90,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
         OnSelectionStateChanged?.Invoke(false);
     }
 
-    public virtual void Interact() => _task.Start(this);
+    public virtual void Interact() => Data.Task.Start(this);
 
     public void Select()
     {
@@ -105,4 +105,6 @@ public class TaskStarter : MonoBehaviour, IInteractable
         renderer.material.SetColor("_Color", SelectionManager.Instance.SelectionColor);
         OnSelectionStateChanged?.Invoke(true);
     }
+
+    public GameObject InstantiatePrefab(Transform transform) => Instantiate(Data.TaskPrefab, transform);
 }

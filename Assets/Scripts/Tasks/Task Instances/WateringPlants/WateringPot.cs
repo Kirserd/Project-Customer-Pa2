@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[System.Obsolete]
 [RequireComponent(typeof(ParticleSystem))]
 public class WateringPot : MonoBehaviour
 {

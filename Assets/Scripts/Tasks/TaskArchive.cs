@@ -4,7 +4,7 @@ public static class TaskArchive
 {
     private static Dictionary<TaskID, Task> _tasks = new()
     {
-        {TaskID.Watering, new WateringTask()}
+        {TaskID.WateringPlants, new WateringTask()}
     };
     public static Task GetTaskByID(TaskID id)
     {

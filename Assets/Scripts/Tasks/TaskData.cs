@@ -1,7 +1,7 @@
 using UnityEngine;
 public enum TaskID
 {
-    Watering
+    WateringPlants
 }
 [CreateAssetMenu(fileName = "New Task", menuName = "Tasks")]
 public class TaskData : ScriptableObject
@@ -11,4 +11,5 @@ public class TaskData : ScriptableObject
     public bool IsGame;
     public TaskID TaskID;
     public Task Task { get => TaskArchive.GetTaskByID(TaskID); }
+    public GameObject TaskPrefab;
 }
