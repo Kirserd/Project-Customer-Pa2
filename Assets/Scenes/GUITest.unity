@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeText: {fileID: 1510165017}
-  _timeTypeText: {fileID: 0}
+  _timeTypeText: {fileID: 1389538307}
   _intervalText: {fileID: 461232592}
 --- !u!1 &430046405
 GameObject:
@@ -603,7 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94db61911a0ee7d4eb209397a643d9e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeMultiplier: 1
+  _timeMultiplier: 5
   _hourLength: 100
   _timer: 0
   _hour: 8
@@ -1419,7 +1419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9379b35a1801e46810b84f55694ebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data: {fileID: 11400000, guid: 52c07357bc98e3a4eb6661081a1e3997, type: 2}
+  _data: {fileID: 11400000, guid: 52c07357bc98e3a4eb6661081a1e3997, type: 2}
   _iconPrefab: {fileID: 1462259292747894621, guid: 8b3c967820c0fc14f97fa7b0d589dcda, type: 3}
   _state: 0
   _interval: 6

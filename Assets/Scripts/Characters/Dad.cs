@@ -79,7 +79,7 @@ public class Dad : MonoBehaviour
         SelectionManager selectionManager = SelectionManager.Instance;
         selectionManager.TrySelectClosestFromPoint(_castOrigin + transform.position, _castRadius);
 
-        if (selectionManager.GetSelectedObject() is IInteractable interactable)
+        if (selectionManager.GetSelectedObject() is IInteractable interactable && interactable.IsActive)
             _closestInteractable = interactable;
         else
             _closestInteractable = null;
