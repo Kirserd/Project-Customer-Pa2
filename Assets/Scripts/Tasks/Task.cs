@@ -21,14 +21,18 @@ public abstract class Task
     {
         OnStarted += HandleOnStarted;
         OnCompleted += ctx => HandleOnCompleted(ctx);
-        
+
+        InitializeReferences();
+    }
+    private static void InitializeReferences()
+    {
         if (_dad is null)
             _dad = GameObject.FindGameObjectWithTag("Player").GetComponent<Dad>();
-        
-        if(_root is null)
+
+        if (_root is null)
             _root = GameObject.FindGameObjectWithTag("SceneObjects").transform;
 
-        if(TaskGUI is null)
+        if (TaskGUI is null)
             TaskGUI = GameObject.FindGameObjectWithTag("TaskGUI").transform;
     }
     private void HandleOnStarted()
@@ -41,7 +45,6 @@ public abstract class Task
     {
         if (result)
         {
-            _dad = GameObject.FindGameObjectWithTag("Player").GetComponent<Dad>();
             _dad.AddPoints(_caller.Data.IsGame, _caller.Data.Points);
             _caller.SetAvailabilityState(TaskStarter.Availability.Done);
         }
@@ -68,6 +71,6 @@ public abstract class Task
             Object.Destroy(TaskGUI.GetChild(i).gameObject);
     }
     public virtual void Stop(TaskStarter caller, bool result) => OnCompleted?.Invoke(result);
-    public abstract void ForcefullyStop();
+    public virtual void ForcefullyStop() => Stop(_caller, false);
     public void Reset() => _caller = null;
 }

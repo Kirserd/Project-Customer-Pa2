@@ -1,7 +1,8 @@
 using UnityEngine;
 public enum TaskID
 {
-    WateringPlants
+    WateringPlants,
+    DoddleJump
 }
 [CreateAssetMenu(fileName = "New Task", menuName = "Tasks")]
 public class TaskData : ScriptableObject

@@ -12,9 +12,9 @@ public class TaskStarter : MonoBehaviour, IInteractable
     public GameObject GameObject => gameObject;
     public bool IsActive => _isActive;
     private bool _isActive;
-
-    [SerializeReference]
-    public TaskData Data;
+    public TaskData Data => _data;
+    [SerializeField]
+    private TaskData _data;
 
     [SerializeField]
     private TaskIcon _iconPrefab;
@@ -44,20 +44,16 @@ public class TaskStarter : MonoBehaviour, IInteractable
         else if ((int)interval == (int)_interval) SetAvailabilityState(Availability.Scheduled);
         else SetAvailabilityState(Availability.Late);
     }
-
     private void TryCreatingIcon(Availability state)
     {
         if (_icon is not null || state != Availability.Scheduled)
             return;
-        try 
-        {
-            _icon = Instantiate(_iconPrefab.gameObject, gameObject.transform).GetComponent<TaskIcon>();
-            OnStateChanged += ctx => _icon.SetIcon(ctx);
-            OnSelectionStateChanged += ctx => _icon.Fade(ctx);
-        }
-        catch {}
+        if (_iconPrefab is null)
+            return;
+        _icon = Instantiate(_iconPrefab.gameObject, gameObject.transform).GetComponent<TaskIcon>();
+        OnStateChanged += ctx => _icon.SetIcon(ctx);
+        OnSelectionStateChanged += ctx => _icon.Fade(ctx);
     }
-
     public void SetAvailabilityState(Availability state) 
     {
         _state = state;
@@ -90,7 +86,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
         OnSelectionStateChanged?.Invoke(false);
     }
 
-    public virtual void Interact() => Data.Task.Start(this);
+    public virtual void Interact() => _data.Task.Start(this);
 
     public void Select()
     {
@@ -106,5 +102,5 @@ public class TaskStarter : MonoBehaviour, IInteractable
         OnSelectionStateChanged?.Invoke(true);
     }
 
-    public GameObject InstantiatePrefab(Transform transform) => Instantiate(Data.TaskPrefab, transform);
+    public GameObject InstantiatePrefab(Transform transform) => Instantiate(_data.TaskPrefab, transform);
 }

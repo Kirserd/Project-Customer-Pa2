@@ -15,5 +15,4 @@ public class WateringTask : Task
         if (_taskDone)
             Stop(_caller, true);
     }
-    public override void ForcefullyStop() => Stop(_caller, false);
 }
