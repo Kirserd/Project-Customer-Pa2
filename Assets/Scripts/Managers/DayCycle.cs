@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class DayCycle : MonoBehaviour
@@ -17,6 +16,9 @@ public class DayCycle : MonoBehaviour
     }
     public delegate void OnTimeIntervalChangedHandler(TimeInterval interval);
     public static OnTimeIntervalChangedHandler OnTimeIntervalChanged;
+
+    public delegate void OnTimeChangedHandler(float hour, float minute);
+    public static OnTimeChangedHandler OnTimeChanged;
 
     [Header("Time-related parameters")]
     [SerializeField]
@@ -54,6 +56,7 @@ public class DayCycle : MonoBehaviour
         _timer += Time.deltaTime * _timeMultiplier;
         _hour = Mathf.Floor(_timer / _hourLength);
         _minute = Mathf.Round((_timer - _hourLength * _hour) / _hourLength * 60);
+        OnTimeChanged.Invoke(_hour, _minute);
     }
 
     private void ValidateInterval()
