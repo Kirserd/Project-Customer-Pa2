@@ -24,7 +24,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
     private Availability _state = Availability.Early;
 
     [SerializeField]
-    private DayCycle.TimeInterval _interval = DayCycle.TimeInterval.LATE_EVENING;
+    private DayCycle.TimeInterval _interval = DayCycle.TimeInterval.Morning;
 
     public delegate void OnStateChangedHandler(Availability state);
     public OnStateChangedHandler OnStateChanged;
@@ -42,7 +42,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
     {
         if ((int)interval < (int)_interval) SetAvailabilityState(Availability.Early);
         else if ((int)interval == (int)_interval) SetAvailabilityState(Availability.Scheduled);
-        else SetAvailabilityState(Availability.Late);
+        else if (_state != Availability.Done) SetAvailabilityState(Availability.Late);
     }
     private void TryCreatingIcon(Availability state)
     {

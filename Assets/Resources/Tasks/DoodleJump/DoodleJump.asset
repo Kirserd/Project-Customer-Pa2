@@ -16,4 +16,4 @@ MonoBehaviour:
   Points: 15
   IsGame: 1
   TaskID: 1
-  TaskPrefab: {fileID: 0}
+  TaskPrefab: {fileID: 6453203295885161504, guid: f7f928c980f6d5644b4c86f597f65df7, type: 3}

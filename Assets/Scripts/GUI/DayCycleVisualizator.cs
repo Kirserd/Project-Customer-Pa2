@@ -19,8 +19,9 @@ public class DayCycleVisualizator : MonoBehaviour
     {
         bool IsAM = hour < 13;
         bool IsLong = hour < 10;
+        bool IsLongInPM = hour < 22;
         _timeText.text = (IsAM? hour : hour - 12) + ":" + (minute < 10 ? "0" + minute : minute);
-        _timeTypeText.text = (IsLong? "" : " ") + (IsAM? "AM" : "PM");
+        _timeTypeText.text = ((IsLong && IsAM || IsLongInPM && !IsAM)? "" : "   ") + (IsAM? "AM" : "PM");
     }
     private void RefreshInterval(DayCycle.TimeInterval interval) => _intervalText.text = interval.ToString();
 }

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-public class WateringTask : Task
+public class WateringPlantsTask : Task
 {
     private readonly Dictionary<Plant, bool> _wateringStatus = new();
     public void SubscribePlant(Plant plant) => _wateringStatus.Add(plant, false);

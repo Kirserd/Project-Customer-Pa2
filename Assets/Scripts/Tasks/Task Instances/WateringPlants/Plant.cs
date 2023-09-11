@@ -3,7 +3,7 @@
 [RequireComponent(typeof(BoxCollider))]
 public class Plant : MonoBehaviour 
 {
-    public static WateringTask _task;
+    public static WateringPlantsTask _task;
     private bool _watered = false;
 
     [SerializeReference]
@@ -17,7 +17,7 @@ public class Plant : MonoBehaviour
         {
             if(value < 0) 
             {
-                _task.ForcefullyStop();
+                _task.ForcefullyStop(false);
                 _waterGauge = 0;
                 return;
             }
@@ -58,7 +58,7 @@ public class Plant : MonoBehaviour
         if (_task is not null)
             return;
 
-        if (Task.Instance is WateringTask task)
+        if (Task.Instance is WateringPlantsTask task)
             _task = task;
         else
             Debug.LogException(new System.Exception("Not settled task error"));

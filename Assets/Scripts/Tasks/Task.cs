@@ -39,6 +39,7 @@ public abstract class Task
     {
         Instance = this;
         _dad.PlayerStateMachine.UpdateState(new TaskState(_dad, _caller.Data));
+        TaskIcon.AllTasksFade.Invoke(true);
         Setup();
     }
     private void HandleOnCompleted(bool result)
@@ -52,6 +53,7 @@ public abstract class Task
             _caller.SetAvailabilityState(TaskStarter.Availability.Late);
 
         _dad.PlayerStateMachine.UpdateState(new MovingState(_dad, _dad.GetComponent<Movement>()));
+        TaskIcon.AllTasksFade.Invoke(false);
 
         Clear();
     }
@@ -71,6 +73,6 @@ public abstract class Task
             Object.Destroy(TaskGUI.GetChild(i).gameObject);
     }
     public virtual void Stop(TaskStarter caller, bool result) => OnCompleted?.Invoke(result);
-    public virtual void ForcefullyStop() => Stop(_caller, false);
+    public virtual void ForcefullyStop(bool result) => Stop(_caller, result);
     public void Reset() => _caller = null;
 }

@@ -3,6 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class TaskIcon : MonoBehaviour
 {
+    public delegate void AllTasksFadeHandler(bool state);
+    public static AllTasksFadeHandler AllTasksFade;
+
     [SerializeField]
     private float _constantSize = 2;
     [SerializeField]
@@ -17,6 +20,7 @@ public class TaskIcon : MonoBehaviour
         RotateToCamera();
         ScaleItself();
         RefreshMaterial();
+        AllTasksFade += Fade;
     }
     private void RefreshMaterial() =>_material = GetComponent<Renderer>().material;
     private void ScaleItself() => transform.localScale = new Vector3
