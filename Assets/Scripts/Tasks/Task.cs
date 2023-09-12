@@ -6,6 +6,7 @@ public abstract class Task
 
     public delegate void OnCompletedHandler(bool result);
     public OnCompletedHandler OnCompleted;
+    public OnCompletedHandler OnForcefullyStopped;
 
     public delegate void OnStartedHandler();
     public OnStartedHandler OnStarted;
@@ -57,12 +58,21 @@ public abstract class Task
 
         Clear();
     }
+    protected void HandleOnStateChanged(TaskStarter.Availability state)
+    {
+        _caller.OnStateChanged -= HandleOnStateChanged;
+        if (state == TaskStarter.Availability.Late)
+            ForcefullyStop(false);
+    }
     public virtual void Start(TaskStarter caller)
     {
         if (_caller == caller)
             return;
 
         _caller = caller;
+        _caller.TryHideHint();
+        _caller.OnStateChanged += HandleOnStateChanged;
+
         OnStarted?.Invoke();
     }
     protected virtual void Setup() => _prefabInstance = _caller.InstantiatePrefab(_root);
@@ -73,6 +83,10 @@ public abstract class Task
             Object.Destroy(TaskGUI.GetChild(i).gameObject);
     }
     public virtual void Stop(TaskStarter caller, bool result) => OnCompleted?.Invoke(result);
-    public virtual void ForcefullyStop(bool result) => Stop(_caller, result);
+    public virtual void ForcefullyStop(bool result)
+    {
+        OnForcefullyStopped?.Invoke(result);
+        Stop(_caller, result);
+    }
     public void Reset() => _caller = null;
 }

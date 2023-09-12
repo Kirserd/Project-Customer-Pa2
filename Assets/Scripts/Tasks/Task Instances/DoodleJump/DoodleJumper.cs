@@ -54,9 +54,18 @@ public class DoodleJumper : MonoBehaviour
     }
     private void SubscribeToInput()
     {
+        Task.Instance.OnForcefullyStopped += ctx => UnsubscribeFromInput();
         InputSubscriber.InputEvents[(int)BoundKeys.ForwardKey] += ctx => TryJump(ctx);
         InputSubscriber.InputEvents[(int)BoundKeys.LeftKey] += ctx => MoveHorizontally(false);
         InputSubscriber.InputEvents[(int)BoundKeys.RightKey] += ctx => MoveHorizontally(true);
+    }
+    private void UnsubscribeFromInput()
+    {
+        _active = false;
+        Task.Instance.OnForcefullyStopped -= ctx => UnsubscribeFromInput();
+        InputSubscriber.InputEvents[(int)BoundKeys.ForwardKey] -= ctx => TryJump(ctx);
+        InputSubscriber.InputEvents[(int)BoundKeys.LeftKey] -= ctx => MoveHorizontally(false);
+        InputSubscriber.InputEvents[(int)BoundKeys.RightKey] -= ctx => MoveHorizontally(true);
     }
 
     private void MoveHorizontally(bool isRight)

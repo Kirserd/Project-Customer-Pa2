@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
 public class Plant : MonoBehaviour 
@@ -66,10 +67,14 @@ public class Plant : MonoBehaviour
     private void SetupGUI()
     {
         GameObject gauge = Instantiate(_wateringGaugePrefab);
-
+        _waterGaugeVisualizer = gauge.GetComponent<GaugeVisualizer>();
+        StartCoroutine(PositionGUI(gauge));
+    }
+    private IEnumerator PositionGUI(GameObject gauge)
+    {
+        yield return new WaitForEndOfFrame();
         gauge.transform.SetParent(Task.TaskGUI);
         gauge.transform.position = Camera.main.WorldToScreenPoint(transform.position);
-        _waterGaugeVisualizer = gauge.GetComponent<GaugeVisualizer>();
     }
     private void SubscribePlant() => _task.SubscribePlant(this);
     public void Water() => WaterGauge += FulfillSpeed;

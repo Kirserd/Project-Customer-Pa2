@@ -26,6 +26,13 @@ public class TaskStarter : MonoBehaviour, IInteractable
     [SerializeField]
     private DayCycle.TimeInterval _interval = DayCycle.TimeInterval.Morning;
 
+    [Header("Optional")]
+    [SerializeField]
+    private string _hintText;
+    [SerializeField]
+    private ContentFitTextBox _hintPrefab;
+    private ContentFitTextBox _hint;
+
     public delegate void OnStateChangedHandler(Availability state);
     public OnStateChangedHandler OnStateChanged;
 
@@ -34,8 +41,8 @@ public class TaskStarter : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        OnStateChanged += ctx => TryCreatingIcon(ctx);
-        DayCycle.OnTimeIntervalChanged += ctx => HandleTimeIntervalChange(ctx);
+        OnStateChanged += TryCreatingIcon;
+        DayCycle.OnTimeIntervalChanged += HandleTimeIntervalChange;
     }
 
     private void HandleTimeIntervalChange(DayCycle.TimeInterval interval)
@@ -84,6 +91,8 @@ public class TaskStarter : MonoBehaviour, IInteractable
 
         renderer.material.SetColor("_Color", Color.white);
         OnSelectionStateChanged?.Invoke(false);
+
+        TryHideHint();
     }
 
     public virtual void Interact() => _data.Task.Start(this);
@@ -100,6 +109,29 @@ public class TaskStarter : MonoBehaviour, IInteractable
 
         renderer.material.SetColor("_Color", SelectionManager.Instance.SelectionColor);
         OnSelectionStateChanged?.Invoke(true);
+
+        TryShowHint();
+    }
+
+    public void TryShowHint()
+    {
+        if (_hintPrefab is null)
+            return;
+
+        _hint = Instantiate(_hintPrefab.gameObject, GameObject.FindGameObjectWithTag("Notifications").transform)
+            .GetComponent<ContentFitTextBox>();
+
+        _hint.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+        _hint.SetText(_hintText);
+    }
+
+    public void TryHideHint()
+    {
+        if (_hint is null)
+            return;
+
+        Destroy(_hint.gameObject);
+        _hint = null;
     }
 
     public GameObject InstantiatePrefab(Transform transform) => Instantiate(_data.TaskPrefab, transform);

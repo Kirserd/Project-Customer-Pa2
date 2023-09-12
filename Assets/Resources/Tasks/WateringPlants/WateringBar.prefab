@@ -314,6 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5770783541732119719}
   - component: {fileID: 5770783541732119720}
+  - component: {fileID: 1188352581958008833}
   m_Layer: 5
   m_Name: WateringBar
   m_TagString: Untagged
@@ -330,7 +331,7 @@ RectTransform:
   m_GameObject: {fileID: 5770783541732119718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5770783541057777408}
@@ -364,3 +365,18 @@ MonoBehaviour:
   minColor: {r: 0.7264151, g: 0.08566215, b: 0.08566215, a: 1}
   midColor: {r: 0.9339623, g: 0.8197485, b: 0.083704144, a: 1}
   maxColor: {r: 0.3480331, g: 0.9339623, b: 0.13656995, a: 1}
+--- !u!114 &1188352581958008833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5770783541732119718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0ef3d33075aa54abf6091028b5c91a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _referenceScreenSize: {x: 1280, y: 720}
+  _scaleByHeight: 1
+  _scaleFactor: 1

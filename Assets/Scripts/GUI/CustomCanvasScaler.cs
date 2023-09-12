@@ -24,8 +24,6 @@ public class CustomCanvasScaler : MonoBehaviour
     private void RefreshScale(float width, float height)
     {
         Vector2 screenSizeDeviation = new Vector2(width, height) / _referenceScreenSize;
-        Debug.Log(width + " : " + height);
-        Debug.Log(screenSizeDeviation);
         float deltaElementSize = (_scaleByHeight ? screenSizeDeviation.y : screenSizeDeviation.x) * _scaleFactor;
         _rect.localScale = new Vector3(_originScale.x * deltaElementSize, _originScale.y * deltaElementSize, _rect.localScale.z);
     }
