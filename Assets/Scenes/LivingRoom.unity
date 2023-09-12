@@ -234,6 +234,7 @@ GameObject:
   - component: {fileID: 334690614}
   - component: {fileID: 334690616}
   - component: {fileID: 334690615}
+  - component: {fileID: 334690618}
   - component: {fileID: 334690617}
   m_Layer: 5
   m_Name: DayCycle
@@ -251,7 +252,7 @@ RectTransform:
   m_GameObject: {fileID: 334690613}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1510165016}
@@ -318,6 +319,21 @@ MonoBehaviour:
   _timeText: {fileID: 1510165017}
   _timeTypeText: {fileID: 1389538307}
   _intervalText: {fileID: 461232592}
+--- !u!114 &334690618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334690613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a0ef3d33075aa54abf6091028b5c91a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _referenceScreenSize: {x: 1280, y: 720}
+  _scaleByHeight: 1
+  _scaleFactor: 1
 --- !u!1 &443444287
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,9 +682,10 @@ GameObject:
   m_Component:
   - component: {fileID: 605663760}
   - component: {fileID: 605663764}
+  - component: {fileID: 605663765}
   - component: {fileID: 605663763}
-  - component: {fileID: 605663762}
   - component: {fileID: 605663761}
+  - component: {fileID: 605663762}
   m_Layer: 0
   m_Name: --StaticManagers--
   m_TagString: Untagged
@@ -744,6 +761,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8bf93ebfdd29e094785274a521e1fd20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &605663765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605663759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9442db819e8d6f348beb3e7d81cf91a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &653260035
