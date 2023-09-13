@@ -127,7 +127,7 @@ public class DoodleJumper : MonoBehaviour
     private void TryLag()
     {
         _lagTimeCounter++;
-        if (_lagTimeCounter % 240 == 0 && Random.Range(0, 10) == 5)
+        if (_lagTimeCounter % 240 == 0 && Random.Range(0, 5) == 3)
             StartCoroutine(Lag());
     }
 

@@ -45,6 +45,12 @@ public abstract class Task
     }
     private void HandleOnCompleted(bool result)
     {
+        if(_caller.Interval == DayCycle.TimeInterval.All)
+        {
+            Finalize();
+            return;
+        }
+
         if (result)
         {
             _dad.AddPoints(_caller.Data.IsGame, _caller.Data.Points);
@@ -52,11 +58,16 @@ public abstract class Task
         }
         else
             _caller.SetAvailabilityState(TaskStarter.Availability.Late);
+        
+        Finalize();
 
-        _dad.PlayerStateMachine.UpdateState(new MovingState(_dad, _dad.GetComponent<Movement>()));
-        TaskIcon.AllTasksFade.Invoke(false);
+        void Finalize()
+        {
+            _dad.PlayerStateMachine.UpdateState(_dad.MovingState);
+            TaskIcon.AllTasksFade.Invoke(false);
 
-        Clear();
+            Clear();
+        }
     }
     protected void HandleOnStateChanged(TaskStarter.Availability state)
     {
@@ -71,7 +82,9 @@ public abstract class Task
 
         _caller = caller;
         _caller.TryHideHint();
-        _caller.OnStateChanged += HandleOnStateChanged;
+
+        if (_caller.Interval != DayCycle.TimeInterval.All)
+            _caller.OnStateChanged += HandleOnStateChanged;
 
         OnStarted?.Invoke();
     }

@@ -91,7 +91,7 @@ public class Dad : MonoBehaviour
     /// <param name="state">The button state.</param>
     private void Interact(ButtonState state)
     {
-        if (ClosestInteractable is null || state == ButtonState.Hold)
+        if (ClosestInteractable is null || state == ButtonState.Hold || PlayerStateMachine.CurrentState != MovingState)
             return;
 
         ClosestInteractable.Interact();

@@ -9,6 +9,7 @@ public enum BoundKeys
     LeftKey,
     RightKey,
     Interact,
+    PickUpPhone,
     LeftClick,
     RightClick
 }
@@ -49,6 +50,7 @@ public sealed class InputSubscriber : MonoBehaviour
         "A",
         "D",
         "F",
+        "E",
         "Mouse0",
         "Mouse1"
     };

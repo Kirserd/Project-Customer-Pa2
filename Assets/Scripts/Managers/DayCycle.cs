@@ -7,6 +7,8 @@ public class DayCycle : MonoBehaviour
         Morning = 6,
         Afternoon = 11,
         Evening = 16,
+        Night = 21,
+        All = 255
     }
     public delegate void OnTimeIntervalChangedHandler(TimeInterval interval);
     public static OnTimeIntervalChangedHandler OnTimeIntervalChanged;
@@ -33,11 +35,12 @@ public class DayCycle : MonoBehaviour
     private TimeInterval _interval = TimeInterval.Morning;
     private TimeInterval _prevInterval = TimeInterval.Evening;
 
-    private void Start() => Refresh();
-    private void Refresh()
+    private void Start()
     {
-        _timer = _hour * _hourLength;
+        Refresh();
+        OnTimeIntervalChanged.Invoke(TimeInterval.All);
     }
+    private void Refresh() => _timer = _hour * _hourLength;
 
     private void Update()
     {
@@ -71,5 +74,17 @@ public class DayCycle : MonoBehaviour
     {
         OnTimeIntervalChanged.Invoke(_interval);
         _prevInterval = _interval;
+    }
+
+    public static string IntervalToDigit(TimeInterval interval)
+    {
+        int start = (int)interval + 2;
+        int end = start + 4;
+
+        return (start < 13 ? start : start - 12) + 
+               (start < 13 ? "AM" : "PM") + 
+               " - " + 
+               (end < 13 ? end : end - 12) + 
+               (end < 13 ? "AM" : "PM");
     }
 }
