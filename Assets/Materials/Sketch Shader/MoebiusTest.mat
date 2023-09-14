@@ -72,7 +72,7 @@ Material:
     m_Floats:
     - Vector1_48e464ae1e5e47cca5356888e019ddd5: 20
     - Vector1_e3f70e8b6dc94543b7186e3c146d98bb: 150
-    - Vector1_fbdbc51b0f764cebbe5cded1c3649a92: 0.56
+    - Vector1_fbdbc51b0f764cebbe5cded1c3649a92: 0.45
     - _AfterDarkening: 1
     - _CrossHatchScale: 24
     - _QueueControl: 0
