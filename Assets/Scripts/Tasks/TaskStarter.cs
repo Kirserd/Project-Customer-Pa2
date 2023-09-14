@@ -150,7 +150,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
             .GetComponent<ContentFitTextBox>();
 
         _hint.gameObject.transform.position = Camera.main.WorldToScreenPoint(transform.position);
-        _hint.SetText(_hintText + "\n <size=12>Press <size=14><b><color=#823721ff>[F]</color></b><size=12> to <size=14><b><color=#823721ff>Interact</color>");
+        _hint.SetText(_hintText + "\n<size=12>Press <size=14><b><color=#823721ff>[F]</color></b><size=12> to <size=14><b><color=#823721ff>Interact</color>");
     }
 
     public void TryHideHint()
