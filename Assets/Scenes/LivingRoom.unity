@@ -132,7 +132,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 71085256}
-  - component: {fileID: 71085257}
   m_Layer: 5
   m_Name: TaskNotifications
   m_TagString: Untagged
@@ -149,32 +148,17 @@ RectTransform:
   m_GameObject: {fileID: 71085255}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 748327973}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -0.5, y: 282.2}
+  m_AnchoredPosition: {x: -0.5, y: 254.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
---- !u!114 &71085257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 71085255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a0ef3d33075aa54abf6091028b5c91a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _referenceScreenSize: {x: 1280, y: 720}
-  _scaleByHeight: 1
-  _scaleFactor: 1
 --- !u!1001 &204302015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1658,10 +1642,10 @@ RectTransform:
   m_Father: {fileID: 2024216343}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 1102, y: 620}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &748327974
 MonoBehaviour:
@@ -1675,7 +1659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0ef3d33075aa54abf6091028b5c91a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _referenceScreenSize: {x: 1280, y: 720}
+  _referenceScreenSize: {x: 1280, y: 620}
   _scaleByHeight: 1
   _scaleFactor: 1
 --- !u!1 &788302459
