@@ -10,6 +10,8 @@ public class TaskStarter : MonoBehaviour, IInteractable
         Done,
         Late
     }
+    public delegate void AllHintsAppearHandler(bool state);
+    public static AllHintsAppearHandler AllHintsAppear;
     public GameObject GameObject => gameObject;
     public bool IsActive => _isActive;
     private bool _isActive;
@@ -29,6 +31,13 @@ public class TaskStarter : MonoBehaviour, IInteractable
     private DayCycle.TimeInterval _interval = DayCycle.TimeInterval.Morning;
     public DayCycle.TimeInterval Interval => _interval;
 
+    public bool IsSelected 
+    { 
+        get => _isSelected; 
+        set => _isSelected = value;
+    }
+    private bool _isSelected;
+
     [Header("Optional")]
     [SerializeField]
     private string _hintText;
@@ -46,6 +55,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
     {
         OnStateChanged += TryCreatingIcon;
         DayCycle.OnTimeIntervalChanged += HandleTimeIntervalChange;
+        AllHintsAppear += HandleAllHintsAppear;
     }
 
     private void HandleTimeIntervalChange(DayCycle.TimeInterval interval)
@@ -120,6 +130,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
         renderer.material.SetColor("_Color", Color.white);
         OnSelectionStateChanged?.Invoke(false);
 
+        IsSelected = false;
         TryHideHint();
     }
 
@@ -138,14 +149,16 @@ public class TaskStarter : MonoBehaviour, IInteractable
         renderer.material.SetColor("_Color", SelectionManager.Instance.SelectionColor);
         OnSelectionStateChanged?.Invoke(true);
 
+        IsSelected = true;
         TryShowHint();
     }
 
     public void TryShowHint()
     {
-        if (_hintPrefab is null)
+        if (_hintPrefab is null || !IsSelected)
             return;
 
+        _icon.Fade(true);
         _hint = Instantiate(_hintPrefab.gameObject, GameObject.FindGameObjectWithTag("Notifications").transform)
             .GetComponent<ContentFitTextBox>();
 
@@ -160,6 +173,12 @@ public class TaskStarter : MonoBehaviour, IInteractable
 
         Destroy(_hint.gameObject);
         _hint = null;
+    }
+
+    private void HandleAllHintsAppear(bool state)
+    {
+        if (state) TryHideHint();
+        else TryShowHint();
     }
 
     public GameObject InstantiatePrefab(Transform transform) => Instantiate(_data.TaskPrefab, transform);

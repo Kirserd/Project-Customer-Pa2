@@ -10,7 +10,7 @@ public class TaskIcon : MonoBehaviour
     private float _constantSize = 2;
     [SerializeField]
     private SerializableDictionary<TaskStarter.Availability, Sprite> Icons;
-
+    
     private bool _isFading;
     private bool _fadeDirection;
     private Material _material;

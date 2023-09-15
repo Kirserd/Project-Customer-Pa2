@@ -40,7 +40,6 @@ public abstract class Task
     {
         Instance = this;
         _dad.PlayerStateMachine.UpdateState(new TaskState(_dad, _caller.Data));
-        TaskIcon.AllTasksFade.Invoke(true);
         Setup();
     }
     private void HandleOnCompleted(bool result)
@@ -64,7 +63,6 @@ public abstract class Task
         void Finalize()
         {
             _dad.PlayerStateMachine.UpdateState(_dad.MovingState);
-            TaskIcon.AllTasksFade.Invoke(false);
 
             Clear();
         }

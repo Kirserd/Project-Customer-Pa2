@@ -13,6 +13,7 @@ public interface ISelectable
     /// Boolean which states whether selection should be enabled or disabled.
     ///</summary>
     bool IsActive { get; }
+    bool IsSelected { get; set; }
 
     ///<summary>
     /// Method that defines selection behavior of the object.

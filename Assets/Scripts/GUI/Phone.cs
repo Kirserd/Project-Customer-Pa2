@@ -41,7 +41,7 @@ public class Phone : MonoBehaviour
 
     private void RefreshReferences()
     {
-        _root = GameObject.FindGameObjectWithTag("Canvas").transform;
+        _root = GameObject.FindGameObjectWithTag("PhoneCanvas").transform;
         _notificationRoot = GameObject.FindGameObjectWithTag("Notifications").transform.GetChild(0);
         _dad = GameObject.FindGameObjectWithTag("Player").GetComponent<Dad>();
     }
