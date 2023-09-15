@@ -2256,7 +2256,7 @@ MonoBehaviour:
   _iconPrefab: {fileID: 1462259292747894621, guid: 8b3c967820c0fc14f97fa7b0d589dcda, type: 3}
   _state: 0
   _interval: 6
-  _hintText: <color=#305510ff>"Watering plants"</color>
+  _hintText: <color=#224008ff>"Watering plants"</color>
   _hintPrefab: {fileID: 3706610547200492460, guid: c4e769ba09b300045acdef350758aa4f, type: 3}
 --- !u!65 &1446996785
 BoxCollider:
@@ -2372,7 +2372,7 @@ MonoBehaviour:
   _iconPrefab: {fileID: 1462259292747894621, guid: 8b3c967820c0fc14f97fa7b0d589dcda, type: 3}
   _state: 0
   _interval: 6
-  _hintText: <color=#404060ff>"Doodle Jump"</color>
+  _hintText: <color=#253050ff>"Doodle Jump"</color>
   _hintPrefab: {fileID: 3706610547200492460, guid: c4e769ba09b300045acdef350758aa4f, type: 3}
 --- !u!65 &1474693999
 BoxCollider:

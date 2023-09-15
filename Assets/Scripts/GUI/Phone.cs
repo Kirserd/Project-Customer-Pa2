@@ -20,6 +20,9 @@ public class Phone : MonoBehaviour
 
     private List<GameObject> _notifications = new();
 
+    private bool _pickUpOnCD = false;
+    private const float PICK_UP_CD = 0.6f;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -53,9 +56,13 @@ public class Phone : MonoBehaviour
     }
     private void ChangePickUpState(ButtonState state)
     {
-        if (state == ButtonState.Hold || _dad.PlayerStateMachine.CurrentState != _dad.MovingState && _dad.PlayerStateMachine.CurrentState != _dad.PhoneState)
+        if (state == ButtonState.Hold ||
+            _dad.PlayerStateMachine.CurrentState != _dad.MovingState &&
+            _dad.PlayerStateMachine.CurrentState != _dad.PhoneState ||
+            _pickUpOnCD)
             return;
 
+        StartCoroutine(PickUpCD());
         if (!_pickedUp)
         {
             _phone = Instantiate(_phonePrefab, _root);
@@ -97,5 +104,11 @@ public class Phone : MonoBehaviour
         _notifications[^1].GetComponent<ContentFitTextBox>().SetText(text);
         (_notifications[^1].transform as RectTransform).anchoredPosition -=
             new Vector2(0, 1.8f * (_notificationPrefab.transform as RectTransform).sizeDelta.y * _notifications.Count - 2);
+    }
+    private IEnumerator PickUpCD()
+    {
+        _pickUpOnCD = true;
+        yield return new WaitForSeconds(PICK_UP_CD);
+        _pickUpOnCD = false;
     }
 }
