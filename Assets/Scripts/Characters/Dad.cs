@@ -18,7 +18,43 @@ public class Dad : MonoBehaviour
     [SerializeField]
     private float _chorePoints;
     [SerializeField]
-    private float _gamePoints;
+    private float _childPoints;
+    [SerializeField]
+    private float _stressPoints;
+
+    private const float MAX_STRESS = 100f;
+
+    public float ChorePoints
+    {
+        get => _chorePoints;
+        set
+        {
+            _chorePoints = value;
+        }
+    }
+    public float ChildPoints
+    {
+        get => _childPoints;
+        set
+        {
+            _childPoints = value;
+        }
+    }
+    public float StressPoints
+    {
+        get => _stressPoints;
+        set
+        {
+            _stressPoints = value;
+            if(_stressPoints >= MAX_STRESS)
+            {
+                _stressPoints = 0;
+                
+                Shout();
+                ChildPoints -= ChildPoints / 3f;
+            }
+        }
+    }
 
     [HideInInspector]
     public IInteractable ClosestInteractable
@@ -56,7 +92,7 @@ public class Dad : MonoBehaviour
     public void AddPoints(bool isGame, byte amount)
     {
         if (isGame)
-            _gamePoints += amount;
+            _childPoints += amount;
         else
             _chorePoints += amount;
     }
@@ -95,6 +131,10 @@ public class Dad : MonoBehaviour
             return;
 
         ClosestInteractable.Interact();
+    }
+    private void Shout()
+    {
+
     }
 
     private void OnDrawGizmos()

@@ -5,7 +5,8 @@ public static class TaskArchive
     private static readonly Dictionary<TaskID, Task> _tasks = new()
     {
         {TaskID.WateringPlants, new WateringPlantsTask()},
-        {TaskID.DoodleJump, new DoodleJumpTask() }
+        {TaskID.DoodleJump, new DoodleJumpTask()},
+        {TaskID.Television, new TelevisionTask()},
     };
     public static Task GetTaskByID(TaskID id)
     {
@@ -13,9 +14,4 @@ public static class TaskArchive
             return _tasks[id];
         return null;
     }
-}
-
-public class DoodleJumpTask : Task
-{
-
 }

@@ -60,9 +60,12 @@ public class TaskStarter : MonoBehaviour, IInteractable
 
     private void HandleTimeIntervalChange(DayCycle.TimeInterval interval)
     {
-        if ((int)interval < (int)_interval) SetAvailabilityState(Availability.Early);
-        else if ((int)interval == (int)_interval) SetAvailabilityState(Availability.Scheduled);
-        else if (_state != Availability.Done) SetAvailabilityState(Availability.Late);
+        if ((int)interval == (int)_interval || _interval == DayCycle.TimeInterval.All)
+            SetAvailabilityState(Availability.Scheduled);
+        else if ((int)interval < (int)_interval) 
+            SetAvailabilityState(Availability.Early);
+        else if (_state != Availability.Done) 
+            SetAvailabilityState(Availability.Late);
     }
     private void TryCreatingIcon(Availability state)
     {
