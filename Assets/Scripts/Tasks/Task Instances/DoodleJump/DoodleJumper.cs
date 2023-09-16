@@ -1,17 +1,17 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class DoodleJumper : MonoBehaviour
 {
-    [Header("World Coordinates Space")]
+    [Header("GameBuddy Console")]
     [SerializeField]
-    private Vector3 _eulerRotation;
+    private Transform _gameBuddyBorder;
     [SerializeField]
-    private GameObject _world;
-    [SerializeField]
-    private float _worldOffset;
+    private Transform _screenMask;
+
+    [Header("Game Rules")]
     [SerializeField]
     private float _winHeight;
     [SerializeField]
@@ -21,48 +21,47 @@ public class DoodleJumper : MonoBehaviour
     [SerializeField]
     private float _jumpForce = 10f;
     [SerializeField]
-    private float _gravityForce = 9.8f;
-    [SerializeField]
     private float _moveSpeed = 5f;
     [SerializeField]
     private float _maxHorizontalPos = 5f;
 
-    [SerializeField]
-    private Renderer _lag;
-    private float _lagTimeCounter;
-
-    private Rigidbody _rigidbody;
+    private Rigidbody2D _rigidbody;
     private bool _isGrounded = false;
 
     private bool _active = true;
+
+    private Vector3 _initCameraPos;
+    private Camera _gameCamera;
 
     private void Start()
     {
         RefreshComponents();
         SubscribeToInput();
-    }
 
-    private void LateUpdate()
-    {
-        _world.transform.localPosition = new Vector3(_world.transform.localPosition.x, -transform.localPosition.y + _worldOffset, _world.transform.localPosition.z);
-        transform.GetChild(0).localPosition = new Vector3(transform.localPosition.x * transform.localScale.x, -transform.localPosition.y / transform.localScale.y, transform.localPosition.z * transform.localScale.z);
+        _initCameraPos = _gameCamera.transform.position;
     }
 
     private void RefreshComponents()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        _gameCamera = GameObject.FindGameObjectWithTag("GameCamera").GetComponent<Camera>();
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
     private void SubscribeToInput()
     {
-        Task.Instance.OnForcefullyStopped += ctx => UnsubscribeFromInput();
+        Task.Instance.OnForcefullyStopped += ctx => StopGame();
         InputSubscriber.InputEvents[(int)BoundKeys.ForwardKey] += ctx => TryJump(ctx);
         InputSubscriber.InputEvents[(int)BoundKeys.LeftKey] += ctx => MoveHorizontally(false);
         InputSubscriber.InputEvents[(int)BoundKeys.RightKey] += ctx => MoveHorizontally(true);
     }
-    private void UnsubscribeFromInput()
+    private void StopGame()
     {
+        Task.Instance.OnForcefullyStopped -= ctx => StopGame();
+
+        _gameCamera.transform.position = _initCameraPos;
+
+        _rigidbody.Sleep();
         _active = false;
-        Task.Instance.OnForcefullyStopped -= ctx => UnsubscribeFromInput();
+
         InputSubscriber.InputEvents[(int)BoundKeys.ForwardKey] -= ctx => TryJump(ctx);
         InputSubscriber.InputEvents[(int)BoundKeys.LeftKey] -= ctx => MoveHorizontally(false);
         InputSubscriber.InputEvents[(int)BoundKeys.RightKey] -= ctx => MoveHorizontally(true);
@@ -74,13 +73,12 @@ public class DoodleJumper : MonoBehaviour
             return;
 
         float horizontal = isRight ? 1 : -1;
-        transform.position = transform.position + Quaternion.Euler(_eulerRotation) * new Vector3(horizontal * _moveSpeed * Time.deltaTime, 0, 0);
-        transform.worldToLocalMatrix.MultiplyPoint(new Vector3(_maxHorizontalPos * 2, 0, 0));
+        _rigidbody.velocity = new Vector2(horizontal * _moveSpeed, _rigidbody.velocity.y);
 
-        if (transform.localPosition.x > _maxHorizontalPos) 
-            transform.localPosition -= new Vector3(_maxHorizontalPos * 2, 0, 0);
+       if (transform.localPosition.x > _maxHorizontalPos) 
+            transform.localPosition -= new Vector3(_maxHorizontalPos * 2, 0);
         if (transform.localPosition.x < -_maxHorizontalPos)
-            transform.localPosition += new Vector3(_maxHorizontalPos * 2, 0, 0);
+            transform.localPosition += new Vector3(_maxHorizontalPos * 2, 0);
     }
 
     private void TryJump(ButtonState state)
@@ -90,66 +88,51 @@ public class DoodleJumper : MonoBehaviour
 
         if (_isGrounded && state == ButtonState.Press)
         {
-            Vector3 localJumpForce = Vector3.up * _jumpForce;
-            Vector3 worldJumpForce = transform.TransformDirection(localJumpForce);
-            _rigidbody.AddForce(worldJumpForce, ForceMode.Impulse);
+            _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
             _isGrounded = false;
         }
     }
 
-    private void TryApplyGravitation()
-    {
-        if (_isGrounded || !_active) 
-            return;
-
-        Vector3 localJumpForce = Vector3.down * _jumpForce;
-        Vector3 worldJumpForce = transform.TransformDirection(localJumpForce);
-        _rigidbody.AddForce(worldJumpForce, ForceMode.Force);
-        _isGrounded = false;
-    }
-
-    private void FixedUpdate()
-    {
-        TryLag();
-        TryApplyGravitation();
-    }
     private void Update()
     {
-        bool isGrounded = CheckGround();
-        _isGrounded = isGrounded;
+        _isGrounded = CheckGround();
 
         if (transform.localPosition.y >= _winHeight)
             StartCoroutine(LagBeforeFinish(true));
         else if (transform.localPosition.y <= _loseHeight)
             StartCoroutine(LagBeforeFinish(false));
+
+        UpdateConsole();
     }
 
-    private void TryLag()
+    private void UpdateConsole()
     {
-        _lagTimeCounter++;
-        if (_lagTimeCounter % 240 == 0 && Random.Range(0, 5) == 3)
-            StartCoroutine(Lag());
+        _gameCamera.transform.position = new Vector3(_gameCamera.transform.position.x, transform.position.y, _gameCamera.transform.position.z);
+        _gameBuddyBorder.position = new Vector3(_gameBuddyBorder.transform.position.x, transform.position.y, _gameBuddyBorder.transform.position.z);
+        _screenMask.position = new Vector3(_screenMask.transform.position.x, transform.position.y, _screenMask.transform.position.z);
     }
 
     private bool CheckGround()
     {
-        float rayLength = 1.0f;
+        float rayLength = 1f;
 
-        if (Physics.Raycast(new Ray(transform.position 
-            - transform.TransformDirection(new Vector3(transform.localScale.x / 2, 0, 0)), 
-            transform.TransformDirection(Vector3.down)), 
-            out RaycastHit hitInfoLeft, rayLength))
+        RaycastHit2D[] hitsInfoLeft = Physics2D.RaycastAll(transform.position - new Vector3(transform.localScale.x / 2, 0, 0), Vector2.down, rayLength);
+        if (hitsInfoLeft.Length > 0)
         {
-            if (hitInfoLeft.collider.CompareTag("Platform"))
-                return true;
+            foreach (RaycastHit2D hit in hitsInfoLeft)
+            {
+                if (hit.collider.CompareTag("Platform"))
+                    return true;
+            }
         }
-        else if (Physics.Raycast(new Ray(transform.position 
-            + transform.TransformDirection(new Vector3(transform.localScale.x/2, 0, 0)), 
-            transform.TransformDirection(Vector3.down)), 
-            out RaycastHit hitInfoRight, rayLength))
+        RaycastHit2D[] hitsInfoRight = Physics2D.RaycastAll(transform.position + new Vector3(transform.localScale.x / 2, 0, 0), Vector2.down, rayLength);
+        if (hitsInfoRight.Length > 0)
         {
-            if (hitInfoRight.collider.CompareTag("Platform"))
-                return true;
+            foreach (RaycastHit2D hit in hitsInfoRight)
+            {
+                if (hit.collider.CompareTag("Platform"))
+                    return true;
+            }
         }
 
         return false;
@@ -161,16 +144,5 @@ public class DoodleJumper : MonoBehaviour
         _active = false;
         yield return new WaitForSeconds(1f);
         Task.Instance.ForcefullyStop(result);
-    }
-
-    private IEnumerator Lag()
-    {
-        _rigidbody.Sleep();
-        _active = false;
-        _lag.enabled = true;
-        yield return new WaitForSeconds(Random.Range(4, 24) / 10f);
-        _lag.enabled = false;
-        _active = true;
-        _rigidbody.WakeUp();
     }
 }

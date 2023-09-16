@@ -16,13 +16,7 @@ public class Plant : MonoBehaviour
         get => _waterGauge; 
         private set
         {
-            if(value < 0) 
-            {
-                _task.ForcefullyStop(false);
-                _waterGauge = 0;
-                return;
-            }
-            else if(value > MAX)
+            if(value > MAX)
             {
                 _waterGauge = MAX;
                 return;
@@ -35,19 +29,14 @@ public class Plant : MonoBehaviour
                 _task.UpdateStatus(this, true);
                 _watered = true;
             }
-            else if (_watered && _waterGauge < PREDICATE)
-            {
-                _task.UpdateStatus(this, false);
-                _watered = false;
-            }
         } 
     }
-    private float _waterGauge = 50f;
+    private float _waterGauge = 0f;
     public bool IsLocked { get; private set; }
     public float FulfillSpeed { get; private set; } = 0.5f; 
     public const float MAX = 100f;
     public const float MIN = 0f;
-    public const float PREDICATE = 80f;
+    public const float PREDICATE = 95f;
     public void Start()
     {
         ValidateTask();
@@ -74,9 +63,8 @@ public class Plant : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         gauge.transform.SetParent(Task.TaskGUI);
-        gauge.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+        gauge.transform.position = MouseManager.Instance.GameCamera.WorldToScreenPoint(transform.position);
     }
     private void SubscribePlant() => _task.SubscribePlant(this);
     public void Water() => WaterGauge += FulfillSpeed;
-    private void FixedUpdate() => WaterGauge -= FulfillSpeed / 10;
 }

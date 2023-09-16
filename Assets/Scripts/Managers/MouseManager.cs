@@ -8,6 +8,7 @@ public class MouseManager : MonoBehaviour
 {
     public static MouseManager Instance { get; private set; }
     public Camera MainCamera;
+    public Camera GameCamera;
 
     private void Awake()
     {
@@ -21,6 +22,8 @@ public class MouseManager : MonoBehaviour
 
         if (MainCamera == null)
             MainCamera = Camera.main;
+        if (GameCamera == null)
+            GameCamera = GameObject.FindGameObjectWithTag("GameCamera").GetComponent<Camera>();
     }
 
     /// <summary>
@@ -31,14 +34,14 @@ public class MouseManager : MonoBehaviour
     private void Refresh(Scene scene, LoadSceneMode mode) => MainCamera = Camera.main;
 
     /// <summary>
-    /// Gets the world position of the mouse cursor.
+    /// Gets the world position of the mouse cursor from screen.
     /// </summary>
     /// <returns>The world position of the mouse cursor.</returns>
-    public Vector3 GetWorldPosition()
+    public Vector3 GetWorldPosition(Camera camera)
     {
         Vector3 mousePosition = Input.mousePosition;
-        mousePosition.z = -MainCamera.transform.position.z;
-        return MainCamera.ScreenToWorldPoint(mousePosition);
+        mousePosition.z = -camera.transform.position.z;
+        return camera.ScreenToWorldPoint(mousePosition);
     }
 
     /// <summary>
