@@ -11,11 +11,8 @@ public class Phone : MonoBehaviour
     private GameObject _phonePrefab;
     private static GameObject _phone;
 
-    [SerializeField]
-    private GameObject _notificationPrefab;
-
     private Dad _dad;
-    private Transform _root, _notificationRoot;
+    private Transform _root;
     private bool _pickedUp;
 
     private List<GameObject> _notifications = new();
@@ -45,13 +42,11 @@ public class Phone : MonoBehaviour
     private void RefreshReferences()
     {
         _root = GameObject.FindGameObjectWithTag("PhoneCanvas").transform;
-        _notificationRoot = GameObject.FindGameObjectWithTag("Notifications").transform.GetChild(0);
         _dad = GameObject.FindGameObjectWithTag("Player").GetComponent<Dad>();
     }
 
     private void Subscribe()
     {
-        DayCycle.OnTimeIntervalChanged += ctx => ClearNotifications();
         InputSubscriber.InputEvents[(int)BoundKeys.PickUpPhone] += ChangePickUpState;
     }
     private void ChangePickUpState(ButtonState state)
@@ -86,24 +81,6 @@ public class Phone : MonoBehaviour
         Destroy(_phone);
         _phone = null;
         _pickedUp = false;
-    }
-
-    private void ClearNotifications()
-    {
-        for (int i = 0; i < _notifications.Count; i++)
-            Destroy(_notifications[i]);
-
-        _notifications.Clear();
-    }
-
-    public void PushNotification(string text) => StartCoroutine(SafePushNotification(text));
-    private IEnumerator SafePushNotification(string text)
-    {
-        yield return new WaitForEndOfFrame();
-        _notifications.Add(Instantiate(_notificationPrefab, _notificationRoot));
-        _notifications[^1].GetComponent<ContentFitTextBox>().SetText(text);
-        (_notifications[^1].transform as RectTransform).anchoredPosition -=
-            new Vector2(0, 1.8f * (_notificationPrefab.transform as RectTransform).sizeDelta.y * _notifications.Count - 2);
     }
     private IEnumerator PickUpCD()
     {

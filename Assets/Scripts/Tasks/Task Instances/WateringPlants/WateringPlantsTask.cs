@@ -7,12 +7,12 @@ public class WateringPlantsTask : Task
     {
         _wateringStatus[plant] = state;
 
-        bool _taskDone = true;
+        bool taskDone = true;
         foreach (Plant status in _wateringStatus.Keys)
             if (!_wateringStatus[status])
-                _taskDone = false;
+                taskDone = false;
 
-        if (_taskDone)
-            Stop(_caller, true);
+        if (taskDone)
+            Stop(_caller, TaskStarter.Availability.Done);
     }
 }

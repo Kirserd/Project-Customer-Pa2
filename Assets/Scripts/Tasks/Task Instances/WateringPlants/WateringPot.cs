@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(ParticleSystem))]
+[System.Obsolete]
 public class WateringPot : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _particles;

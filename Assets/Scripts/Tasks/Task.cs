@@ -4,31 +4,34 @@ public abstract class Task
 {
     public static Task Instance;
 
-    public delegate void OnCompletedHandler(bool result);
+    public delegate void OnCompletedHandler(TaskStarter.Availability state);
     public OnCompletedHandler OnCompleted;
     public OnCompletedHandler OnForcefullyStopped;
 
     public delegate void OnStartedHandler();
     public OnStartedHandler OnStarted;
-    
+
     protected TaskStarter _caller;
     protected GameObject _prefabInstance;
 
-    protected static Dad _dad;
+    public static Dad Dad;
     protected static Transform _root;
     public static Transform TaskGUI;
 
     protected Task()
     {
-        OnStarted += HandleOnStarted;
-        OnCompleted += ctx => HandleOnCompleted(ctx);
-
+        InitializeSubscriptions();
         InitializeReferences();
+    }
+    private void InitializeSubscriptions()
+    {
+        OnStarted += HandleOnStarted;
+        OnCompleted += HandleOnCompleted;
     }
     private static void InitializeReferences()
     {
-        if (_dad is null)
-            _dad = GameObject.FindGameObjectWithTag("Player").GetComponent<Dad>();
+        if (Dad is null)
+            Dad = GameObject.FindGameObjectWithTag("Player").GetComponent<Dad>();
 
         if (_root is null)
             _root = GameObject.FindGameObjectWithTag("SceneObjects").transform;
@@ -39,39 +42,40 @@ public abstract class Task
     private void HandleOnStarted()
     {
         Instance = this;
-        _dad.PlayerStateMachine.UpdateState(new TaskState(_dad, _caller.Data));
+        Dad.PlayerStateMachine.UpdateState(new TaskState(Dad, _caller.Data));
         Setup();
     }
-    private void HandleOnCompleted(bool result)
+    private void HandleOnCompleted(TaskStarter.Availability state)
     {
-        if(_caller.Interval == DayCycle.TimeInterval.All)
+        if (_caller is null)
+            return;
+
+        if (_caller.Interval == DayCycle.TimeInterval.All)
         {
             Finalize();
             return;
         }
-
-        if (result)
-        {
-            _dad.AddPoints(_caller.Data.IsGame, _caller.Data.Points);
-            _caller.SetAvailabilityState(TaskStarter.Availability.Done);
-        }
-        else
-            _caller.SetAvailabilityState(TaskStarter.Availability.Late);
-        
+        _caller.SetAvailabilityState(state);
         Finalize();
 
         void Finalize()
         {
-            _dad.PlayerStateMachine.UpdateState(_dad.MovingState);
+            Dad.PlayerStateMachine.UpdateState(Dad.MovingState);
 
             Clear();
+            Reset();
         }
     }
     protected void HandleOnStateChanged(TaskStarter.Availability state)
     {
+        if (_caller is null)
+            return;
+
         _caller.OnStateChanged -= HandleOnStateChanged;
-        if (state == TaskStarter.Availability.Late)
-            ForcefullyStop(false);
+        if (state != TaskStarter.Availability.Late)
+            return;
+
+        ForcefullyStop(state);
     }
     public virtual void Start(TaskStarter caller)
     {
@@ -93,11 +97,26 @@ public abstract class Task
         for (int i = 0; i < TaskGUI.childCount; i++)
             Object.Destroy(TaskGUI.GetChild(i).gameObject);
     }
-    public virtual void Stop(TaskStarter caller, bool result) => OnCompleted?.Invoke(result);
-    public virtual void ForcefullyStop(bool result)
+    public virtual void Stop(TaskStarter caller, TaskStarter.Availability state) => OnCompleted?.Invoke(state);
+    public virtual void ForcefullyStop(TaskStarter.Availability state)
     {
-        OnForcefullyStopped?.Invoke(result);
-        Stop(_caller, result);
+        OnForcefullyStopped?.Invoke(state);
+        Stop(_caller, state);
     }
-    public void Reset() => _caller = null;
+    public virtual void ForcefullyStop(TaskStarter.Availability state, ButtonState buttonState)
+    {
+        if (buttonState == ButtonState.Hold)
+            return;
+
+        ForcefullyStop(state);
+    }
+    public void Reset()
+    {
+        OnStarted = null;
+        OnCompleted = null;
+        OnForcefullyStopped = null;
+        _caller = null;
+
+        InitializeSubscriptions();
+    }
 }

@@ -5,8 +5,10 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 
+[System.Obsolete]
 public class ScreenSpaceOutlines : ScriptableRendererFeature {
 
+    [System.Obsolete]
     [System.Serializable]
     private class ScreenSpaceOutlineSettings {
 
@@ -49,6 +51,7 @@ public class ScreenSpaceOutlines : ScriptableRendererFeature {
 
     }
 
+    [System.Obsolete]
     private class ViewSpaceNormalsTexturePass : ScriptableRenderPass {
 
         private ViewSpaceNormalsTextureSettings normalsTextureSettings;
@@ -124,6 +127,7 @@ public class ScreenSpaceOutlines : ScriptableRendererFeature {
 
     }
 
+    [System.Obsolete]
     private class ScreenSpaceOutlinePass : ScriptableRenderPass {
 
         private readonly Material screenSpaceOutlineMaterial;

@@ -48,18 +48,20 @@ public class DoodleJumper : MonoBehaviour
     }
     private void SubscribeToInput()
     {
-        Task.Instance.OnForcefullyStopped += ctx => StopGame();
+        Task.Instance.OnCompleted += ctx => StopGame();
         InputSubscriber.InputEvents[(int)BoundKeys.ForwardKey] += ctx => TryJump(ctx);
         InputSubscriber.InputEvents[(int)BoundKeys.LeftKey] += ctx => MoveHorizontally(false);
         InputSubscriber.InputEvents[(int)BoundKeys.RightKey] += ctx => MoveHorizontally(true);
     }
     private void StopGame()
     {
-        Task.Instance.OnForcefullyStopped -= ctx => StopGame();
+        Task.Instance.OnCompleted -= ctx => StopGame();
 
         _gameCamera.transform.position = _initCameraPos;
 
-        _rigidbody.Sleep();
+        if(_rigidbody is not null)
+            _rigidbody.Sleep();
+        
         _active = false;
 
         InputSubscriber.InputEvents[(int)BoundKeys.ForwardKey] -= ctx => TryJump(ctx);
@@ -98,9 +100,9 @@ public class DoodleJumper : MonoBehaviour
         _isGrounded = CheckGround();
 
         if (transform.localPosition.y >= _winHeight)
-            StartCoroutine(LagBeforeFinish(true));
+            StartCoroutine(LagBeforeFinish(TaskStarter.Availability.Done));
         else if (transform.localPosition.y <= _loseHeight)
-            StartCoroutine(LagBeforeFinish(false));
+            StartCoroutine(LagBeforeFinish(TaskStarter.Availability.Scheduled));
 
         UpdateConsole();
     }
@@ -138,11 +140,11 @@ public class DoodleJumper : MonoBehaviour
         return false;
     }
 
-    private IEnumerator LagBeforeFinish(bool result)
+    private IEnumerator LagBeforeFinish(TaskStarter.Availability state)
     {
         _rigidbody.Sleep();
         _active = false;
         yield return new WaitForSeconds(1f);
-        Task.Instance.ForcefullyStop(result);
+        Task.Instance.ForcefullyStop(state);
     }
 }

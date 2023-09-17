@@ -11,16 +11,31 @@ public class TaskState : PlayerState
     }
     public override void EnterState()
     {
-        TaskIcon.AllTasksFade.Invoke(true);
-        TaskStarter.AllHintsAppear.Invoke(true);
-        _gameCamera.enabled = true;
+        SetTaskInWorldUI(true);
+        SubscribeToInput();
         base.EnterState();
     }
     public override void ExitState()
     {
-        TaskIcon.AllTasksFade.Invoke(false);
-        TaskStarter.AllHintsAppear.Invoke(false);
-        _gameCamera.enabled = false;
+        SetTaskInWorldUI(false);
+        UnsubscribeFromInput();
         base.ExitState();
     }
+    private void SetTaskInWorldUI(bool state)
+    {
+        TaskIcon.AllTasksFade.Invoke(state);
+        TaskStarter.AllHintsAppear.Invoke(state);
+        _gameCamera.enabled = state;
+    }
+    private void SubscribeToInput()
+    {
+        InputSubscriber.InputEvents[(int)BoundKeys.Esc] += StopTask;
+        InputSubscriber.InputEvents[(int)BoundKeys.Backspace] += StopTask;
+    }
+    private void UnsubscribeFromInput()
+    {
+        InputSubscriber.InputEvents[(int)BoundKeys.Esc] -= StopTask;
+        InputSubscriber.InputEvents[(int)BoundKeys.Backspace] -= StopTask;
+    }
+    private void StopTask(ButtonState state) => _data.Task.ForcefullyStop(TaskStarter.Availability.Scheduled, state);
 }

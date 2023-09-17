@@ -12,6 +12,8 @@ public enum BoundKeys
     PickUpPhone,
     Space,
     Enter,
+    Esc,
+    Backspace,
     LeftClick,
     RightClick
 }
@@ -55,6 +57,8 @@ public sealed class InputSubscriber : MonoBehaviour
         "E",
         "Return",
         "Space",
+        "Escape",
+        "Backspace",
         "Mouse0",
         "Mouse1"
     };

@@ -24,6 +24,9 @@ public class TaskStarter : MonoBehaviour, IInteractable
     private TaskIcon _icon;
 
     [SerializeField]
+    private GameObject _legendaPrefab;
+
+    [SerializeField]
     private Availability _state = Availability.Early;
     public Availability CurrentState => _state;
 
@@ -31,9 +34,9 @@ public class TaskStarter : MonoBehaviour, IInteractable
     private DayCycle.TimeInterval _interval = DayCycle.TimeInterval.Morning;
     public DayCycle.TimeInterval Interval => _interval;
 
-    public bool IsSelected 
-    { 
-        get => _isSelected; 
+    public bool IsSelected
+    {
+        get => _isSelected;
         set => _isSelected = value;
     }
     private bool _isSelected;
@@ -62,9 +65,9 @@ public class TaskStarter : MonoBehaviour, IInteractable
     {
         if ((int)interval == (int)_interval || _interval == DayCycle.TimeInterval.All)
             SetAvailabilityState(Availability.Scheduled);
-        else if ((int)interval < (int)_interval) 
+        else if ((int)interval < (int)_interval)
             SetAvailabilityState(Availability.Early);
-        else if (_state != Availability.Done) 
+        else if (_state != Availability.Done)
             SetAvailabilityState(Availability.Late);
     }
     private void TryCreatingIcon(Availability state)
@@ -78,43 +81,23 @@ public class TaskStarter : MonoBehaviour, IInteractable
         OnSelectionStateChanged += ctx => _icon.Fade(ctx);
     }
 
-    public void SetAvailabilityState(Availability state) 
+    public void SetAvailabilityState(Availability state)
     {
         _state = state;
         if (state != Availability.Scheduled)
             TurnSelectabilityTo(false);
-        else
-        {
-            Phone.Instance.PushNotification
-            (
-                "TODO ( " 
-                + DayCycle.IntervalToDigit(_interval) + 
-                " ):\n<b>" + "\"" + GetConvertedTaskName() + "\""
-            );
+        else 
             TurnSelectabilityTo(true);
-        }
+
+        if(state == Availability.Done)
+            Task.Dad.AddPoints(Data.IsGame, Data.Points);
+
         OnStateChanged?.Invoke(state);
-        
-        string GetConvertedTaskName()
-        {
-            string text = _data.TaskID.ToString();
-            if (string.IsNullOrWhiteSpace(text))
-                return "";
-            StringBuilder newText = new StringBuilder(text.Length * 2);
-            newText.Append(text[0]);
-            for (int i = 1; i < text.Length; i++)
-            {
-                if (char.IsUpper(text[i]) && text[i - 1] != ' ')
-                    newText.Append(' ');
-                newText.Append(text[i]);
-            }
-            return newText.ToString();
-        }
     }
 
     public void TurnSelectabilityTo(bool state)
     {
-        if (_isActive == state) 
+        if (_isActive == state)
             return;
 
         _isActive = state;
@@ -184,5 +167,9 @@ public class TaskStarter : MonoBehaviour, IInteractable
         else TryShowHint();
     }
 
-    public GameObject InstantiatePrefab(Transform transform) => Instantiate(_data.TaskPrefab, transform);
+    public GameObject InstantiatePrefab(Transform transform)
+    {
+        Instantiate(_legendaPrefab, Task.TaskGUI);
+        return Instantiate(_data.TaskPrefab, transform);
+    }
 }

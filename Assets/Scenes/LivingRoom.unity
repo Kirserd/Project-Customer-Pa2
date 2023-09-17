@@ -123,42 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &71085255
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 71085256}
-  m_Layer: 5
-  m_Name: TaskNotifications
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &71085256
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 71085255}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 748327973}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 550.5, y: 254.5}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 1, y: 1}
 --- !u!1 &185488432
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,6 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 9d2934b635e9bce4db53d7e59a877a18, type: 2}
   _iconPrefab: {fileID: 1462259292747894621, guid: 8b3c967820c0fc14f97fa7b0d589dcda, type: 3}
+  _legendaPrefab: {fileID: 1142299423607413962, guid: 0494b6bed50a8cb418629ca453ee79e3, type: 3}
   _state: 1
   _interval: 255
   _hintText: <color=#403008ff>"Televisor"</color>
@@ -1163,8 +1128,8 @@ RectTransform:
   m_GameObject: {fileID: 322814461}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2024216343}
   m_RootOrder: -1
@@ -1186,7 +1151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a0ef3d33075aa54abf6091028b5c91a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _referenceScreenSize: {x: 1280, y: 720}
+  _referenceScreenSize: {x: 1280, y: 620}
   _scaleByHeight: 1
   _scaleFactor: 1
 --- !u!114 &322814464
@@ -1343,7 +1308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1931,8 +1896,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 71085256}
+  m_Children: []
   m_Father: {fileID: 2024216343}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2481,6 +2445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 52c07357bc98e3a4eb6661081a1e3997, type: 2}
   _iconPrefab: {fileID: 1462259292747894621, guid: 8b3c967820c0fc14f97fa7b0d589dcda, type: 3}
+  _legendaPrefab: {fileID: 1142299423607413962, guid: 0494b6bed50a8cb418629ca453ee79e3, type: 3}
   _state: 0
   _interval: 6
   _hintText: <color=#224008ff>"Watering plants"</color>
@@ -2597,6 +2562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: b56a7f29981ee124280c6489634b662c, type: 2}
   _iconPrefab: {fileID: 1462259292747894621, guid: 8b3c967820c0fc14f97fa7b0d589dcda, type: 3}
+  _legendaPrefab: {fileID: 1142299423607413962, guid: 0494b6bed50a8cb418629ca453ee79e3, type: 3}
   _state: 0
   _interval: 6
   _hintText: <color=#253050ff>"Doodle Jump"</color>
@@ -3249,7 +3215,8 @@ MonoBehaviour:
   _castRadius: 4
   _castOrigin: {x: 0, y: 0, z: 0}
   _chorePoints: 0
-  _gamePoints: 0
+  _childPoints: 0
+  _stressPoints: 0
 --- !u!114 &2082464338
 MonoBehaviour:
   m_ObjectHideFlags: 0
