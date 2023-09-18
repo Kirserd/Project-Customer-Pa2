@@ -6,7 +6,8 @@ public static class TaskArchive
     {
         {TaskID.WateringPlants, new WateringPlantsTask()},
         {TaskID.DoodleJump, new DoodleJumpTask()},
-        {TaskID.Television, new TelevisionTask()},
+        {TaskID.Television, new EmptyTask()},
+        {TaskID.ToyBox, new ToyTask()},
     };
     public static Task GetTaskByID(TaskID id)
     {
@@ -15,3 +16,4 @@ public static class TaskArchive
         return null;
     }
 }
+

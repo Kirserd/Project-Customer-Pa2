@@ -3,7 +3,8 @@ public enum TaskID
 {
     WateringPlants,
     DoodleJump,
-    Television
+    Television,
+    ToyBox,
 }
 [CreateAssetMenu(fileName = "New Task", menuName = "Tasks")]
 public class TaskData : ScriptableObject

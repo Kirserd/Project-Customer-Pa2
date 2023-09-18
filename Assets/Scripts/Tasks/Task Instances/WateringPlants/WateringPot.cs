@@ -24,8 +24,6 @@ public class WateringPot : MonoBehaviour
     private void SetPositionToCursor()
     {
         Vector3 MousePosition = MouseManager.Instance.GetWorldPosition(MouseManager.Instance.GameCamera);
-        Transform parent = transform.parent;
-        Vector3 newPosition = MousePosition;
-        transform.position = new Vector3(newPosition.x, newPosition.y, transform.position.z);
+        transform.position = new Vector3(MousePosition.x, MousePosition.y, transform.position.z);
     }
 }

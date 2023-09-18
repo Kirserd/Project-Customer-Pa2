@@ -110,7 +110,7 @@ public abstract class Task
 
         ForcefullyStop(state);
     }
-    public void Reset()
+    public virtual void Reset()
     {
         OnStarted = null;
         OnCompleted = null;
