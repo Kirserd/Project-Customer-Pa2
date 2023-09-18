@@ -1818,7 +1818,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _phonePrefab: {fileID: 7549167747483726165, guid: d56aaffea333f684993f0579ed5e6489, type: 3}
-  _notificationPrefab: {fileID: 7821607854695153846, guid: 1fedccdaa32d56e4cb66c25429ec87ce, type: 3}
 --- !u!1 &653260035
 GameObject:
   m_ObjectHideFlags: 0

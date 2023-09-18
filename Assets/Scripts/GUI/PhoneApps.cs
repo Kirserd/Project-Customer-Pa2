@@ -34,4 +34,6 @@ public class PhoneApps : MonoBehaviour
 
         _currentApp = app;
     }
+
+    public void ChangePickUpStateProxy() => Phone.Instance.ChangePickUpStateProxy();
 }

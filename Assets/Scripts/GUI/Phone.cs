@@ -49,6 +49,7 @@ public class Phone : MonoBehaviour
     {
         InputSubscriber.InputEvents[(int)BoundKeys.PickUpPhone] += ChangePickUpState;
     }
+    public void ChangePickUpStateProxy() => ChangePickUpState(ButtonState.Press);
     private void ChangePickUpState(ButtonState state)
     {
         if (state == ButtonState.Hold ||
@@ -64,6 +65,8 @@ public class Phone : MonoBehaviour
             _dad.PlayerStateMachine.UpdateState(_dad.PhoneState);
             Animator animator = _phone.GetComponent<Animator>();
             animator.SetTrigger("PickUp");
+            ImageFader screenDarkening = _phone.transform.GetChild(0).GetComponent<ImageFader>();
+            screenDarkening.FadeIn();
             _pickedUp = true;
         }
         else
@@ -71,6 +74,8 @@ public class Phone : MonoBehaviour
             _dad.PlayerStateMachine.UpdateState(_dad.MovingState);
             Animator animator = _phone.GetComponent<Animator>();
             animator.SetTrigger("Hide");
+            ImageFader screenDarkening = _phone.transform.GetChild(0).GetComponent<ImageFader>();
+            screenDarkening.FadeOut();
             StartCoroutine(WaitToDestroy());
         }
     }
