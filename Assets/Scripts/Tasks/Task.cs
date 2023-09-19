@@ -21,23 +21,18 @@ public abstract class Task
     protected Task()
     {
         InitializeSubscriptions();
-        InitializeReferences();
+        RefreshReferences();
     }
     private void InitializeSubscriptions()
     {
         OnStarted += HandleOnStarted;
         OnCompleted += HandleOnCompleted;
     }
-    private static void InitializeReferences()
+    public static void RefreshReferences()
     {
-        if (Dad is null)
-            Dad = GameObject.FindGameObjectWithTag("Player").GetComponent<Dad>();
-
-        if (_root is null)
-            _root = GameObject.FindGameObjectWithTag("SceneObjects").transform;
-
-        if (TaskGUI is null)
-            TaskGUI = GameObject.FindGameObjectWithTag("TaskGUI").transform;
+        Dad = GameObject.FindGameObjectWithTag("Player").GetComponent<Dad>();
+        _root = GameObject.FindGameObjectWithTag("SceneObjects").transform;
+        TaskGUI = GameObject.FindGameObjectWithTag("TaskGUI").transform;
     }
     private void HandleOnStarted()
     {

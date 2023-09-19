@@ -27,12 +27,15 @@ public class MouseManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Refreshes the main camera reference when a new scene is loaded.
+    /// Refreshes the camera references when a new scene is loaded.
     /// </summary>
     /// <param name="scene">The loaded scene.</param>
     /// <param name="mode">The load scene mode.</param>
-    private void Refresh(Scene scene, LoadSceneMode mode) => MainCamera = Camera.main;
-
+    private void Refresh(Scene scene, LoadSceneMode mode)
+    {
+        MainCamera = Camera.main;
+        GameCamera = GameObject.FindGameObjectWithTag("GameCamera").GetComponent<Camera>();
+    }
     /// <summary>
     /// Gets the world position of the mouse cursor from screen.
     /// </summary>

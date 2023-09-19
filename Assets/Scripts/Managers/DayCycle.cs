@@ -53,7 +53,7 @@ public class DayCycle : MonoBehaviour
         _timer += Time.deltaTime * _timeMultiplier;
         _hour = Mathf.Floor(_timer / _hourLength);
         _minute = Mathf.Round((_timer - _hourLength * _hour) / _hourLength * 60);
-        OnTimeChanged.Invoke(_hour, _minute);
+        OnTimeChanged?.Invoke(_hour, _minute);
     }
 
     private void ValidateInterval()

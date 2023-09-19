@@ -1,5 +1,4 @@
-﻿using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TaskStarter : MonoBehaviour, IInteractable
 {
@@ -44,6 +43,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
     [Header("Optional")]
     [SerializeField]
     private string _hintText;
+
     [SerializeField]
     private ContentFitTextBox _hintPrefab;
     private ContentFitTextBox _hint;

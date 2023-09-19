@@ -14,48 +14,6 @@ public class Dad : MonoBehaviour
     private Vector3 _castOrigin;
     private IInteractable _closestInteractable;
 
-    [Header("Gauges")]
-    [SerializeField]
-    private float _chorePoints;
-    [SerializeField]
-    private float _childPoints;
-    [SerializeField]
-    private float _stressPoints;
-
-    private const float MAX_STRESS = 100f;
-
-    public float ChorePoints
-    {
-        get => _chorePoints;
-        set
-        {
-            _chorePoints = value;
-        }
-    }
-    public float ChildPoints
-    {
-        get => _childPoints;
-        set
-        {
-            _childPoints = value;
-        }
-    }
-    public float StressPoints
-    {
-        get => _stressPoints;
-        set
-        {
-            _stressPoints = value;
-            if(_stressPoints >= MAX_STRESS)
-            {
-                _stressPoints = 0;
-                
-                Shout();
-                ChildPoints -= ChildPoints / 3f;
-            }
-        }
-    }
-
     [HideInInspector]
     public IInteractable ClosestInteractable
     {
@@ -68,8 +26,9 @@ public class Dad : MonoBehaviour
             _closestInteractable = value;
         }
     }
+
     #region StateMachine
-    public PlayerStateMachine PlayerStateMachine { get; private set; }
+    public static PlayerStateMachine PlayerStateMachine { get; private set; }
     public MovingState MovingState { get; private set; }
     public PhoneState PhoneState { get; private set; }
     public DialogState DialogState { get; private set; }
@@ -77,31 +36,40 @@ public class Dad : MonoBehaviour
 
     private void Awake()
     {
+        if (PlayerStateMachine is null)
+            PlayerStateMachine = new PlayerStateMachine();
+    }
+
+    private void Start() 
+    {
+        PlayerStateMachine = new PlayerStateMachine();
+
+        MovingState = new MovingState(this, gameObject.GetComponent<Movement>());
+        PhoneState = new PhoneState(this);
+        DialogState = new DialogState(this);
+
+        PlayerStateMachine.Initialize(MovingState);
+        RefreshSubscriptions(); 
+    }
+
+    public void UpdateStates()
+    {
         PlayerStateMachine = new PlayerStateMachine();
 
         MovingState = new MovingState(this, gameObject.GetComponent<Movement>());
         PhoneState = new PhoneState(this);
         DialogState = new DialogState(this);
     }
-    private void Start() 
-    {
-        PlayerStateMachine.Initialize(MovingState);
-        RefreshSubscriptions(); 
-    }
 
     public void AddPoints(bool isGame, byte amount)
     {
         if (isGame)
-            _childPoints += amount;
+            PointManager.ChildPoints += amount;
         else
-            _chorePoints += amount;
+            PointManager.ChorePoints += amount;
     }
 
-    public void RefreshSubscriptions()
-    {
-        InputSubscriber.InputEvents[(int)BoundKeys.Interact] += ctx => Interact(ctx);
-    }
-
+    public void RefreshSubscriptions() => InputSubscriber.InputEvents[(int)BoundKeys.Interact] += ctx => Interact(ctx);
     private void FixedUpdate()
     {
         GetClosestInteractable();
@@ -132,7 +100,7 @@ public class Dad : MonoBehaviour
 
         ClosestInteractable.Interact();
     }
-    private void Shout()
+    public void Shout()
     {
 
     }
@@ -145,4 +113,46 @@ public class Dad : MonoBehaviour
             Gizmos.DrawWireSphere(_castOrigin + transform.position, _castRadius);
         }
     }
+}
+
+public static class PointManager{
+
+    private static float _chorePoints;
+    private static float _childPoints;
+    private static float _stressPoints;
+
+    private const float MAX_STRESS = 100f;
+
+    public static float ChorePoints
+    {
+        get => _chorePoints;
+        set
+        {
+            _chorePoints = value;
+        }
+    }
+    public static float ChildPoints
+    {
+        get => _childPoints;
+        set
+        {
+            _childPoints = value;
+        }
+    }
+    public static float StressPoints
+    {
+        get => _stressPoints;
+        set
+        {
+            _stressPoints = value;
+            if (_stressPoints >= MAX_STRESS)
+            {
+                _stressPoints = 0;
+                
+                GameObject.FindGameObjectWithTag("Player").GetComponent<Dad>().Shout();
+                ChildPoints -= ChildPoints / 3f;
+            }
+        }
+    }
+
 }

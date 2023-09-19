@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Phone : MonoBehaviour
 {
@@ -9,7 +8,7 @@ public class Phone : MonoBehaviour
 
     [SerializeField]
     private GameObject _phonePrefab;
-    private static GameObject _phone;
+    private GameObject _phone;
 
     private Dad _dad;
     private Transform _root;
@@ -20,23 +19,16 @@ public class Phone : MonoBehaviour
     private bool _pickUpOnCD = false;
     private const float PICK_UP_CD = 0.6f;
 
-    private void Awake()
+    private void Start()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
         Instance = this;
-
-        SceneManager.sceneLoaded += 
-        (Scene scene, LoadSceneMode mode) => Refresh();
+        Refresh();
     }
 
-    private void Refresh()
+    public void Refresh()
     {
-        RefreshReferences();
         Subscribe();
+        RefreshReferences();
     }
 
     private void RefreshReferences()
@@ -53,8 +45,8 @@ public class Phone : MonoBehaviour
     private void ChangePickUpState(ButtonState state)
     {
         if (state == ButtonState.Hold ||
-            _dad.PlayerStateMachine.CurrentState != _dad.MovingState &&
-            _dad.PlayerStateMachine.CurrentState != _dad.PhoneState ||
+            Dad.PlayerStateMachine.CurrentState != _dad.MovingState &&
+            Dad.PlayerStateMachine.CurrentState != _dad.PhoneState ||
             _pickUpOnCD)
             return;
 
@@ -62,7 +54,7 @@ public class Phone : MonoBehaviour
         if (!_pickedUp)
         {
             _phone = Instantiate(_phonePrefab, _root);
-            _dad.PlayerStateMachine.UpdateState(_dad.PhoneState);
+            Dad.PlayerStateMachine.UpdateState(_dad.PhoneState);
             Animator animator = _phone.GetComponent<Animator>();
             animator.SetTrigger("PickUp");
             ImageFader screenDarkening = _phone.transform.GetChild(0).GetComponent<ImageFader>();
@@ -71,7 +63,7 @@ public class Phone : MonoBehaviour
         }
         else
         {
-            _dad.PlayerStateMachine.UpdateState(_dad.MovingState);
+            Dad.PlayerStateMachine.UpdateState(_dad.MovingState);
             Animator animator = _phone.GetComponent<Animator>();
             animator.SetTrigger("Hide");
             ImageFader screenDarkening = _phone.transform.GetChild(0).GetComponent<ImageFader>();
