@@ -5,6 +5,7 @@ public enum TaskID
     DoodleJump,
     Television,
     ToyBox,
+    DrawingGame,
 }
 [CreateAssetMenu(fileName = "New Task", menuName = "Tasks")]
 public class TaskData : ScriptableObject

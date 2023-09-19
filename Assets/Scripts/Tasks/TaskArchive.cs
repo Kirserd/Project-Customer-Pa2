@@ -8,6 +8,7 @@ public static class TaskArchive
         {TaskID.DoodleJump, new DoodleJumpTask()},
         {TaskID.Television, new EmptyTask()},
         {TaskID.ToyBox, new ToyTask()},
+        {TaskID.DrawingGame, new DrawingGameTask()},
     };
     public static Task GetTaskByID(TaskID id)
     {

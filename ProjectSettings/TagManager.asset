@@ -8,6 +8,9 @@ TagManager:
   - SceneObjects
   - Canvas
   - Platform
+  - GameCamera
+  - Notifications
+  - PhoneCanvas
   layers:
   - Default
   - TransparentFX

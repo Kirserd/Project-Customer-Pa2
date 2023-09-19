@@ -9,6 +9,5 @@ public class ToyBox : MonoBehaviour
             Destroy(collision.gameObject);
             (Task.Instance as ToyTask).AddToy();
         }
-
     }
 }
