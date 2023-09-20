@@ -66,7 +66,7 @@ public abstract class Task
         {
             _stressAccumulation = false;
             Dad.PlayerStateMachine.UpdateState(Dad.MovingState);
-            PointManager.CompletionOrder.Add(_caller.Data.TaskID);
+            PointManager.CompletionOrder.Add((_caller.Data.TaskID, _caller.Data.IsGame));
 
             Clear();
             Reset();

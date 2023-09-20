@@ -7,6 +7,7 @@ public class StressBar : MonoBehaviour
 
     private void Start()
     {
+        DayCycle.OnTimeIntervalChanged += PointManager.FinalizeGame;
         _stressMeter = GetComponent<GaugeVisualizer>();
         StartCoroutine(UpdateStressMeter());
     }
@@ -15,11 +16,10 @@ public class StressBar : MonoBehaviour
         while (true) 
         { 
             yield return new WaitForSeconds(0.5f);
+            PointManager.StressPoints -= 0.1f;
+            PointManager.AllStress += PointManager.StressPoints / 10f;
+            PointManager.StressIterations += 0.05f;
             _stressMeter.Value = PointManager.StressPoints;
         } 
-    }
-    private void Update()
-    {
-        PointManager.StressPoints -= 0.1f * Time.deltaTime;
     }
 }

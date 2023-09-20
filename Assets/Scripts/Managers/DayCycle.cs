@@ -36,7 +36,7 @@ public class DayCycle : MonoBehaviour
     private static TimeInterval _prevInterval = TimeInterval.Night;
 
     private static bool _started;
-
+    private static bool _count = true;
     private void Start()
     {
         Refresh();
@@ -48,7 +48,8 @@ public class DayCycle : MonoBehaviour
 
     private void Update()
     {
-        CountTime();
+        if(_count)
+            CountTime();
         ValidateInterval();
     }
 
@@ -101,4 +102,7 @@ public class DayCycle : MonoBehaviour
         _prevInterval = TimeInterval.Night;
         _started = false;
     }
+
+    public static void StopCount() => _count = false;
+    public static void ContinueCount() => _count = true;
 }

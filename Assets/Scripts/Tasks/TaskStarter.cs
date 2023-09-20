@@ -67,7 +67,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
 
         if (_interval == DayCycle.TimeInterval.All)
             SetAvailabilityState(Availability.Television);
-        else if(PointManager.CompletionOrder.Contains(Data.TaskID))
+        else if(PointManager.CompletionOrder.Contains((Data.TaskID, Data.IsGame)))
             SetAvailabilityState(Availability.Done);
         else if ((int)interval == (int)_interval)
             SetAvailabilityState(Availability.Scheduled);
