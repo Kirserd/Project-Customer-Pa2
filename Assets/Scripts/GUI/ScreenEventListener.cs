@@ -14,7 +14,7 @@ public class ScreenEventListener : MonoBehaviour
         {
             _previousHeight = Screen.height;
             _previousWidth = Screen.width;
-            OnScreenSizeChanged.Invoke(_previousWidth, _previousHeight);
+            OnScreenSizeChanged?.Invoke(_previousWidth, _previousHeight);
         }
     }
 }
