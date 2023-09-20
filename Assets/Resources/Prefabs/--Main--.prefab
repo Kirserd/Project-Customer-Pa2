@@ -364,11 +364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeMultiplier: 10
-  _hourLength: 80
-  _timer: 0
-  _hour: 8
-  _minute: 0
-  _interval: 6
+  _hourLength: 100
 --- !u!1 &5298929086959756119
 GameObject:
   m_ObjectHideFlags: 0

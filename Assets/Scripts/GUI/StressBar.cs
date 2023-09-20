@@ -13,4 +13,8 @@ public class StressBar : MonoBehaviour
     {
         _stressMeter.Value = PointManager.StressPoints;
     }
+    private void Update()
+    {
+        PointManager.StressPoints -= 0.3f * Time.deltaTime;        
+    }
 }
