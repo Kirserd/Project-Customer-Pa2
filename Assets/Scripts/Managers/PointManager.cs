@@ -41,8 +41,10 @@ public static class PointManager
             _stressPoints = value;
             if (_stressPoints >= 100)
             {
-                _stressPoints = 0;
+                if (Dad.PlayerStateMachine.CurrentState is not MovingState)
+                    return;
                 
+                _stressPoints = 0;
                 GameObject.FindGameObjectWithTag("Player").GetComponent<Dad>().Shout();
                 ChildPoints -= ChildPoints / 3f;
             }

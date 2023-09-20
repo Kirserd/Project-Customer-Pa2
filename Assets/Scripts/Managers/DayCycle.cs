@@ -33,15 +33,18 @@ public class DayCycle : MonoBehaviour
     private static float _minute = 0f;
     [SerializeField]
     private static TimeInterval _interval = TimeInterval.Morning;
-    private static TimeInterval _prevInterval = TimeInterval.Evening;
+    private static TimeInterval _prevInterval = TimeInterval.Night;
+
+    private static bool _started;
 
     private void Start()
     {
         Refresh();
         OnTimeIntervalChanged.Invoke(TimeInterval.All);
-        OnTimeIntervalChanged.Invoke(TimeInterval.Morning);
+        OnTimeIntervalChanged.Invoke(_interval);
+        _prevInterval = TimeInterval.All;
     }
-    private void Refresh() => _timer = _hour * _hourLength + _minute;
+    private void Refresh() => _timer = _hour * _hourLength + _minute * _hourLength / 60;
 
     private void Update()
     {
@@ -95,6 +98,7 @@ public class DayCycle : MonoBehaviour
         _minute = 0;
         _timer = 0f;
         _interval = TimeInterval.Morning;
-        _prevInterval = TimeInterval.Evening;
+        _prevInterval = TimeInterval.Night;
+        _started = false;
     }
 }

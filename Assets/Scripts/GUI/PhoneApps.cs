@@ -40,6 +40,5 @@ public class PhoneApps : MonoBehaviour
 
     private void DisplayNotes() => _apps[Apps.Notes].GetComponent<Notes>().UpdateAll();
     
-
     public void ChangePickUpStateProxy() => Phone.Instance.ChangePickUpStateProxy();
 }

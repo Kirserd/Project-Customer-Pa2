@@ -41,11 +41,12 @@ public abstract class Task
     {
         Instance = this;
         Dad.PlayerStateMachine.UpdateState(new TaskState(Dad, _caller.Data));
-        _stressAccumulation = true;
 
-        if(!_caller.Data.IsGame)
+        if (!_caller.Data.IsGame)
+        {
+            _stressAccumulation = true;
             _caller.StartCoroutine(StressAccumulation());
-        
+        }
         Setup();
     }
     private void HandleOnCompleted(TaskStarter.Availability state)
@@ -129,7 +130,8 @@ public abstract class Task
     {
         while (_stressAccumulation)
         {
-            PointManager.StressPoints += 1f;
+            PointManager.StressPoints += 0.5f;
+            StressBar.UpdateStressMeter();
             yield return new WaitForSeconds(0.5f);
         }
     }
