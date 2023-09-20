@@ -131,7 +131,6 @@ public abstract class Task
         while (_stressAccumulation)
         {
             PointManager.StressPoints += 0.7f;
-            StressBar.UpdateStressMeter();
             yield return new WaitForSeconds(0.5f);
         }
     }

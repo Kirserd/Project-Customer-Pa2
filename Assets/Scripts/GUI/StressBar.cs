@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class StressBar : MonoBehaviour
 {
@@ -7,15 +8,18 @@ public class StressBar : MonoBehaviour
     private void Start()
     {
         _stressMeter = GetComponent<GaugeVisualizer>();
-        UpdateStressMeter();
+        StartCoroutine(UpdateStressMeter());
     }
-    public static void UpdateStressMeter()
+    public IEnumerator UpdateStressMeter()
     {
-        _stressMeter.Value = PointManager.StressPoints;
+        while (true) 
+        { 
+            yield return new WaitForSeconds(0.5f);
+            _stressMeter.Value = PointManager.StressPoints;
+        } 
     }
     private void Update()
     {
         PointManager.StressPoints -= 0.1f * Time.deltaTime;
-        UpdateStressMeter();
     }
 }
