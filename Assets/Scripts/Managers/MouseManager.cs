@@ -23,7 +23,11 @@ public class MouseManager : MonoBehaviour
         if (MainCamera == null)
             MainCamera = Camera.main;
         if (GameCamera == null)
-            GameCamera = GameObject.FindGameObjectWithTag("GameCamera").GetComponent<Camera>();
+        {
+            GameObject camera = GameObject.FindGameObjectWithTag("GameCamera");
+            if (camera is not null)
+                GameCamera = camera.GetComponent<Camera>();
+        }
     }
 
     /// <summary>

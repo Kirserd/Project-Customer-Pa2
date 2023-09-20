@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class PointManager
 {
@@ -70,7 +71,7 @@ public static class PointManager
             return;
         Debug.Log("Finalization...");
         DayCycle.StopCount();
-        CalculateCoordinate();
+        SceneManager.LoadScene("EndScreen");
     }
 
     public static Vector2 CalculateCoordinate()
