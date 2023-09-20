@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public abstract class Task
 {
@@ -17,6 +18,8 @@ public abstract class Task
     public static Dad Dad;
     protected static Transform _root;
     public static Transform TaskGUI;
+
+    private bool _stressAccumulation;
 
     protected Task()
     {
@@ -38,6 +41,11 @@ public abstract class Task
     {
         Instance = this;
         Dad.PlayerStateMachine.UpdateState(new TaskState(Dad, _caller.Data));
+        _stressAccumulation = true;
+
+        if(!_caller.Data.IsGame)
+            _caller.StartCoroutine(StressAccumulation());
+        
         Setup();
     }
     private void HandleOnCompleted(TaskStarter.Availability state)
@@ -55,7 +63,9 @@ public abstract class Task
 
         void Finalize()
         {
+            _stressAccumulation = false;
             Dad.PlayerStateMachine.UpdateState(Dad.MovingState);
+            PointManager.CompletionOrder.Add(_caller.Data.TaskID);
 
             Clear();
             Reset();
@@ -113,5 +123,14 @@ public abstract class Task
         _caller = null;
 
         InitializeSubscriptions();
+    }
+
+    private IEnumerator StressAccumulation()
+    {
+        while (_stressAccumulation)
+        {
+            PointManager.StressPoints += 1f;
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ToyBox
   m_EditorClassIdentifier: 
   Name: ToyBox
-  Points: 0
+  Points: 50
   IsGame: 0
   TaskID: 3
   TaskPrefab: {fileID: 6251705123717054099, guid: bf5f1e937f97d884f962978f333f494a, type: 3}

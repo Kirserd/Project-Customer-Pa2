@@ -24,23 +24,24 @@ public class DayCycle : MonoBehaviour
     [Range(0F, 500F)]
     private float _hourLength = 100f;
     [SerializeField]
-    private float _timer = 0f;
+    private static float _timer = 0f;
 
     [Header("Translated time")]
     [SerializeField]
-    private float _hour = 8f;
+    private static float _hour = 8f;
     [SerializeField]
-    private float _minute = 0f;
+    private static float _minute = 0f;
     [SerializeField]
-    private TimeInterval _interval = TimeInterval.Morning;
-    private TimeInterval _prevInterval = TimeInterval.Evening;
+    private static TimeInterval _interval = TimeInterval.Morning;
+    private static TimeInterval _prevInterval = TimeInterval.Evening;
 
     private void Start()
     {
         Refresh();
         OnTimeIntervalChanged.Invoke(TimeInterval.All);
+        OnTimeIntervalChanged.Invoke(TimeInterval.Morning);
     }
-    private void Refresh() => _timer = _hour * _hourLength;
+    private void Refresh() => _timer = _hour * _hourLength + _minute;
 
     private void Update()
     {
@@ -81,10 +82,19 @@ public class DayCycle : MonoBehaviour
         int start = (int)interval + 2;
         int end = start + 4;
 
-        return (start < 13 ? start : start - 12) + 
-               (start < 13 ? "AM" : "PM") + 
-               " - " + 
-               (end < 13 ? end : end - 12) + 
+        return (start < 13 ? start : start - 12) +
+               (start < 13 ? "AM" : "PM") +
+               " - " +
+               (end < 13 ? end : end - 12) +
                (end < 13 ? "AM" : "PM");
+    }
+
+    public static void ResetTime()
+    {
+        _hour = 8f;
+        _minute = 0;
+        _timer = 0f;
+        _interval = TimeInterval.Morning;
+        _prevInterval = TimeInterval.Evening;
     }
 }

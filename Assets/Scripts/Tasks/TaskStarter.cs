@@ -7,7 +7,8 @@ public class TaskStarter : MonoBehaviour, IInteractable
         Early,
         Scheduled,
         Done,
-        Late
+        Late,
+        Television
     }
     public delegate void AllHintsAppearHandler(bool state);
     public static AllHintsAppearHandler AllHintsAppear;
@@ -63,7 +64,12 @@ public class TaskStarter : MonoBehaviour, IInteractable
 
     private void HandleTimeIntervalChange(DayCycle.TimeInterval interval)
     {
-        if ((int)interval == (int)_interval || _interval == DayCycle.TimeInterval.All)
+
+        if (_interval == DayCycle.TimeInterval.All)
+            SetAvailabilityState(Availability.Television);
+        else if(PointManager.CompletionOrder.Contains(Data.TaskID))
+            SetAvailabilityState(Availability.Done);
+        else if ((int)interval == (int)_interval)
             SetAvailabilityState(Availability.Scheduled);
         else if ((int)interval < (int)_interval)
             SetAvailabilityState(Availability.Early);
@@ -72,7 +78,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
     }
     private void TryCreatingIcon(Availability state)
     {
-        if (_icon is not null || state != Availability.Scheduled)
+        if (_icon is not null || state != Availability.Scheduled && state != Availability.Television)
             return;
         if (_iconPrefab is null)
             return;
@@ -84,7 +90,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
     public void SetAvailabilityState(Availability state)
     {
         _state = state;
-        if (state != Availability.Scheduled)
+        if (state != Availability.Scheduled && state != Availability.Television)
             TurnSelectabilityTo(false);
         else 
             TurnSelectabilityTo(true);

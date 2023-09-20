@@ -33,7 +33,13 @@ public class PhoneApps : MonoBehaviour
             _apps[app].SetActive(true);
 
         _currentApp = app;
+
+        if (app == Apps.Notes)
+            DisplayNotes();
     }
+
+    private void DisplayNotes() => _apps[Apps.Notes].GetComponent<Notes>().UpdateAll();
+    
 
     public void ChangePickUpStateProxy() => Phone.Instance.ChangePickUpStateProxy();
 }
