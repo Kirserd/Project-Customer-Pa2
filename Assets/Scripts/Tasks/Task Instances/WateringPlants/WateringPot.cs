@@ -5,14 +5,27 @@ using UnityEngine;
 public class WateringPot : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _particles;
-    private void Start() => _particles.enableEmission = false;
+    private void Start() 
+    {
+        AudioManager.Source.clip = AudioManager.Clips["WPPour"];
+        AudioManager.Source.loop = true;
+        AudioManager.Source.volume = 0.5f;
+        AudioManager.Source.Pause();
+        _particles.enableEmission = false; 
+    }
     private void Update()
     {
         SetPositionToCursor();
         if (Input.GetMouseButtonDown(0))
+        {
+            AudioManager.Source.Play();
             _particles.enableEmission = true;
+        }
         if (Input.GetMouseButtonUp(0))
+        {
+            AudioManager.Source.Pause();
             _particles.enableEmission = false;
+        }
     }
     private void OnParticleCollision(GameObject other)
     {

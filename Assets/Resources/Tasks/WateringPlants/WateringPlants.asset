@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WateringPlants
   m_EditorClassIdentifier: 
   Name: WateringPlants
-  Points: 50
+  Points: 55
   IsGame: 0
   TaskID: 0
   TaskPrefab: {fileID: 5391278792660694881, guid: 7a8d9284b38c0b64d99a927239407319, type: 3}

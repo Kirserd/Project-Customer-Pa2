@@ -33,7 +33,13 @@ public class DayCycle : MonoBehaviour
     private static float _minute = 0f;
     [SerializeField]
     private static TimeInterval _interval = TimeInterval.Morning;
+    public static TimeInterval Interval => _interval;
+
     private static TimeInterval _prevInterval = TimeInterval.Night;
+    public static TimeInterval PrevInterval => _prevInterval;
+
+    [SerializeField]
+    private GameObject _timeChangedNotification;
 
     private static bool _started;
     private static bool _count = true;
@@ -71,7 +77,12 @@ public class DayCycle : MonoBehaviour
         else
         {
             if (_hour > (int)_interval + 5)
+            {
                 _interval = (TimeInterval)((int)_interval + 5);
+                AudioManager.Source.PlayOneShot(AudioManager.Clips["Interval"], 0.8f);
+                Instantiate(_timeChangedNotification, GameObject.FindGameObjectWithTag("Notifications").transform)
+                    .GetComponent<OnIntervalChangedDisplayer>().SetTextTo(_interval);
+            }
         }
     }
 

@@ -57,6 +57,7 @@ public class Teleport : MonoBehaviour, IInteractable
             return;
 
         _current = _fromTo;
+        AudioManager.Source.PlayOneShot(AudioManager.Clips["OpenDoor"], 0.5f);
         ResetSubscriptions();
         SceneManager.LoadScene(_sceneNames[_current], LoadSceneMode.Single);
         _current = _reverseFromTo[_fromTo];
@@ -89,6 +90,8 @@ public class Teleport : MonoBehaviour, IInteractable
 
         Task.RefreshReferences();
         Teleport spawn = _spawns[_current];
+        if (spawn is null)
+            return;
         Task.Dad.transform.position = spawn.transform.position + spawn._spawnOffset;
         _placed = true;
     }

@@ -19,6 +19,9 @@ public class Toy : MonoBehaviour
         if (Vector3.Distance(MousePosition, transform.position) > _dragRadius)
             return;
 
+        if(isDragging == false)
+            AudioManager.Source.PlayOneShot(AudioManager.Clips["TBPickUp"], 1f);
+
         isDragging = true;
         _offset = transform.position - MousePosition;
     }

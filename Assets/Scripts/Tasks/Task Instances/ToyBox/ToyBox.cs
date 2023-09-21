@@ -6,6 +6,7 @@ public class ToyBox : MonoBehaviour
     {
         if(collision.gameObject.name == "Toy")
         {
+            AudioManager.Source.PlayOneShot(AudioManager.Clips["TBToBox"], 1f);
             Destroy(collision.gameObject);
             (Task.Instance as ToyTask).AddToy();
         }

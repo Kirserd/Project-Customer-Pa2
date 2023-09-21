@@ -190,7 +190,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -316,9 +316,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lorem ipsum doloet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet
-    Lorem ipr sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Loret
-    Lorem ipsum dolor sit olor sit amet Lorem ipsum dolor sit amet Lorem ipsum dol
+  m_text: Neglectful parenting, or uninvolved parenting, involves parental detachment
+    and limited involvement in a child's life. These parents provide basic physical
+    care but lack emotional support, nurturing, and communication. \nChildren in
+    such families often become self-sufficient and resilient but may struggle with
+    emotions, forming relationships, and academics due to the absence of guidance
+    and support.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -327,7 +330,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -345,8 +348,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1084,7 +1087,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1481,7 +1484,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: " + Better something \n + More something\n + Big horse dick"
+  m_text: " + Better something \n + More something\n + Great connection"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -1490,7 +1493,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 15319332
+    rgba: 4293509412
   m_fontColor: {r: 0.14117648, g: 0.75686276, b: 0.9137255, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1508,8 +1511,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1518,7 +1521,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 4
+  m_characterSpacing: 3
   m_wordSpacing: 0
   m_lineSpacing: 64
   m_lineSpacingMax: 0
@@ -1625,7 +1628,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 2837737
+    rgba: 4281027817
   m_fontColor: {r: 0.9137255, g: 0.29803923, b: 0.16862746, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1643,8 +1646,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1653,7 +1656,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 4
+  m_characterSpacing: 3
   m_wordSpacing: 0
   m_lineSpacing: 64
   m_lineSpacingMax: 0

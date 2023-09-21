@@ -59,6 +59,7 @@ public class Phone : MonoBehaviour
             animator.SetTrigger("PickUp");
             ImageFader screenDarkening = _phone.transform.GetChild(0).GetComponent<ImageFader>();
             screenDarkening.FadeIn();
+            AudioManager.Source.PlayOneShot(AudioManager.Clips["PhonePickUp"]);
             _pickedUp = true;
         }
         else
@@ -68,6 +69,7 @@ public class Phone : MonoBehaviour
             animator.SetTrigger("Hide");
             ImageFader screenDarkening = _phone.transform.GetChild(0).GetComponent<ImageFader>();
             screenDarkening.FadeOut();
+            AudioManager.Source.PlayOneShot(AudioManager.Clips["PhonePutDown"]);
             StartCoroutine(WaitToDestroy());
         }
     }

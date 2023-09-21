@@ -37,10 +37,19 @@ public class DoodleJumper : MonoBehaviour
     {
         RefreshComponents();
         SubscribeToInput();
-
+        ChangeMusic(true);
         _initCameraPos = _gameCamera.transform.position;
     }
 
+    private void ChangeMusic(bool state)
+    {
+        AudioSource source = AudioManager.Source.transform.GetChild(0).GetComponent<AudioSource>();
+        source.clip = state? 
+            AudioManager.Clips["GB"] :
+            AudioManager.Clips["Lobby"];
+
+        source.Play();
+    }
     private void RefreshComponents()
     {
         _gameCamera = GameObject.FindGameObjectWithTag("GameCamera").GetComponent<Camera>();
@@ -90,6 +99,7 @@ public class DoodleJumper : MonoBehaviour
 
         if (_isGrounded && state == ButtonState.Press)
         {
+            AudioManager.Source.PlayOneShot(AudioManager.Clips["GBJump"], 1f);
             _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
             _isGrounded = false;
         }
@@ -97,9 +107,12 @@ public class DoodleJumper : MonoBehaviour
 
     private void Update()
     {
+        if (!_active)
+            return;
+
         _isGrounded = CheckGround();
 
-        if (transform.localPosition.y >= _winHeight)
+        if (transform.localPosition.y >= _winHeight) 
             StartCoroutine(LagBeforeFinish(TaskStarter.Availability.Done));
         else if (transform.localPosition.y <= _loseHeight)
             StartCoroutine(LagBeforeFinish(TaskStarter.Availability.Scheduled));
@@ -144,7 +157,9 @@ public class DoodleJumper : MonoBehaviour
     {
         _rigidbody.Sleep();
         _active = false;
-        yield return new WaitForSeconds(1f);
+        ChangeMusic(false);
+        AudioManager.Source.PlayOneShot(AudioManager.Clips["GBWin"], 1f);
+        yield return new WaitForSeconds(2f);
         Task.Instance.ForcefullyStop(state);
     }
 }

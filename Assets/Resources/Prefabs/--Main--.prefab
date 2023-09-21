@@ -149,7 +149,7 @@ Transform:
   - {fileID: 5298929086959756123}
   - {fileID: 5298929086702220194}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5298929085226477798
 GameObject:
@@ -363,8 +363,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94db61911a0ee7d4eb209397a643d9e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeMultiplier: 9.7
+  _timeMultiplier: 8.5
   _hourLength: 100
+  _timeChangedNotification: {fileID: 5951209840617316735, guid: 25ff36e134e0fc64ea199793b515541a, type: 3}
 --- !u!1 &5298929086959756119
 GameObject:
   m_ObjectHideFlags: 0

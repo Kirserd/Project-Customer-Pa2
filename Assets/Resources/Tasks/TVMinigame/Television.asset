@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Television
   Points: 0
-  IsGame: 0
+  IsGame: 1
   TaskID: 2
   TaskPrefab: {fileID: 5016974832927059575, guid: 22488b5a481b1ec4297f951d96462a19, type: 3}

@@ -41,6 +41,7 @@ public abstract class Task
     {
         Instance = this;
         Dad.PlayerStateMachine.UpdateState(new TaskState(Dad, _caller.Data));
+        ClearNotifications();
 
         if (!_caller.Data.IsGame)
         {
@@ -48,6 +49,13 @@ public abstract class Task
             _caller.StartCoroutine(StressAccumulation());
         }
         Setup();
+
+    }
+    private void ClearNotifications()
+    {
+        Transform notifications = GameObject.FindGameObjectWithTag("Notifications").transform;
+        for (int i = 0; i < notifications.childCount; i++)
+            Object.Destroy(notifications.GetChild(i).transform);
     }
     private void HandleOnCompleted(TaskStarter.Availability state)
     {
@@ -66,7 +74,6 @@ public abstract class Task
         {
             _stressAccumulation = false;
             Dad.PlayerStateMachine.UpdateState(Dad.MovingState);
-            PointManager.CompletionOrder.Add((_caller.Data.TaskID, _caller.Data.IsGame));
 
             Clear();
             Reset();
@@ -123,6 +130,11 @@ public abstract class Task
         OnForcefullyStopped = null;
         _caller = null;
 
+        AudioManager.Source.clip = null;
+        AudioManager.Source.volume = 1f;
+        AudioManager.Source.loop = false;
+        AudioManager.Source.Pause();
+
         InitializeSubscriptions();
     }
 
@@ -130,7 +142,7 @@ public abstract class Task
     {
         while (_stressAccumulation)
         {
-            PointManager.StressPoints += 0.7f;
+            PointManager.StressPoints += 1f;
             yield return new WaitForSeconds(0.5f);
         }
     }

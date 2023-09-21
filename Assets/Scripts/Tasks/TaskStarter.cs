@@ -95,9 +95,14 @@ public class TaskStarter : MonoBehaviour, IInteractable
         else 
             TurnSelectabilityTo(true);
 
-        if(state == Availability.Done)
-            Task.Dad.AddPoints(Data.IsGame, Data.Points);
+        if (state == Availability.Done)
+        {
+            if (PointManager.CompletionOrder.Contains((Data.TaskID, Data.IsGame)))
+                return;
 
+            Task.Dad.AddPoints(Data.IsGame, Data.Points);
+            PointManager.CompletionOrder.Add((Data.TaskID, Data.IsGame));
+        }
         OnStateChanged?.Invoke(state);
     }
 

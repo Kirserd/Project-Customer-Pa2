@@ -72,13 +72,17 @@ public static class PointManager
         Debug.Log("Finalization...");
         DayCycle.StopCount();
         SceneManager.LoadScene("EndScreen");
+
+        AudioSource source = AudioManager.Source.transform.GetChild(0).GetComponent<AudioSource>();
+        source.clip = AudioManager.Clips["EndScreen"];
+        source.Play();
     }
 
     public static Vector2 CalculateCoordinate()
     {
         Vector2 result = Vector2.zero;
         float yUnMapped = _chorePoints;
-        result.y = (Remap(yUnMapped, 0, 100) - 0.5f) * 2f;
+        result.y = -((Remap(yUnMapped, 0, 100) - 0.5f) * 2f);
 
         float avgStress = AllStress / StressIterations;
 
@@ -88,8 +92,8 @@ public static class PointManager
         Debug.Log("avgStress: " + avgStress);
         Debug.Log("rawChild: " + Mathf.Clamp01(_childPoints));
         Debug.Log("avgChildPrio: " + GetAvgChildPro());
-        Debug.Log("chores: " + result.y);
-        Debug.Log("child: " + result.x);
+        Debug.Log("choresFinal: " + result.y);
+        Debug.Log("childFinal: " + result.x);
 
         return result;
 

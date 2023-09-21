@@ -33,12 +33,20 @@ public class Pen : MonoBehaviour
         _drawnLinesContainer.transform.SetParent(gameObject.transform);
         _savedLineRendererPrefab = GetComponent<LineRenderer>();
         _canvasTexture = new Texture2D(256, 256);
+
+        AudioManager.Source.clip = AudioManager.Clips["DRDraw"];
+        AudioManager.Source.loop = true;
+        AudioManager.Source.volume = 0.5f;
+        AudioManager.Source.Pause();
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if(!_isDrawing)
+                AudioManager.Source.Play();
+
             _isDrawing = true;
             _lineRenderer.positionCount = 0;
             _currentLine.Clear();
@@ -61,6 +69,8 @@ public class Pen : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            if (_isDrawing)
+                AudioManager.Source.Pause();
             _isDrawing = false;
             SaveCurrentLine();
             UpdateCanvasTexture();

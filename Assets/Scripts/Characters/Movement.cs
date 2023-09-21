@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -20,6 +21,8 @@ public class Movement : MonoBehaviour
     private Animator _animator;
     private Vector3 _direction;
 
+    private float _stepCounter;
+    private bool _stepRight;
     private void Start()
     {
         RefreshComponents();
@@ -58,6 +61,21 @@ public class Movement : MonoBehaviour
         _direction = Vector3.zero;
     }
 
+    private void Step()
+    {
+        _stepCounter += Time.fixedDeltaTime;
+        if(_stepCounter >= 0.35f)
+        {
+            _stepCounter = 0f;
+            if(_stepRight)
+                AudioManager.Source.PlayOneShot(AudioManager.Clips["FootstepRight"], 1f);
+            else
+                AudioManager.Source.PlayOneShot(AudioManager.Clips["FootstepLeft"], 1f);
+
+            _stepRight = !_stepRight;
+        }
+    }
+
     /// <summary>
     /// Moves the player character forwards based on the current velocity.
     /// </summary>
@@ -65,6 +83,9 @@ public class Movement : MonoBehaviour
     {
         _rigidbody.velocity += _acceleration * Time.fixedDeltaTime * (Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0) * Vector3.forward);
         _rigidbody.velocity = Vector3.ClampMagnitude(_rigidbody.velocity, _maxSpeed);
+
+        if(_rigidbody.velocity.magnitude >= 0.25f)
+            Step();
     }
 
     /// <summary>
