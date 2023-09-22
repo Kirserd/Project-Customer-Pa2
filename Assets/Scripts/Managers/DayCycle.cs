@@ -108,7 +108,7 @@ public class DayCycle : MonoBehaviour
     {
         _hour = 8f;
         _minute = 0;
-        _timer = 0f;
+        _timer = 800f;
         _interval = TimeInterval.Morning;
         _prevInterval = TimeInterval.Night;
         _started = false;

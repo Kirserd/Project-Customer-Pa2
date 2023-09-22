@@ -80,6 +80,7 @@ public sealed class InputSubscriber : MonoBehaviour
         {
             Instance = this;
             SceneManager.sceneLoaded += Refresh;
+            PointManager.Start();
             DontDestroyOnLoad(Instance);
         }
         else if (Instance != this)

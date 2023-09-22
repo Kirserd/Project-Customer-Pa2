@@ -2,83 +2,21 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum CameraState
-{
-    PLAYER,
-    TARGET,
-    FREE
-};
-public enum CameraMovementType
-{
-    INTERPOLATION,
-    LINEAR,
-    TELEPORT
-};
-
-public struct SequencePoint
-{
-    public SequencePoint(Vector3 point, CameraMovementType movementType)
-    {
-        Point = point;
-        Rotation = new Vector3(-1,-1,-1);
-        MovementType = movementType;
-        ZoomMultiplier = -1;
-        LinearSpeed = -1;
-        InterpolateSpeed = -1;
-    }
-    public SequencePoint(Vector3 point, CameraMovementType movementType, float zoomMultiplier = -1, float linearSpeed = -1, float interpolateSpeed = -1)
-    {
-        Point = point;
-        Rotation = new Vector3(-1, -1, -1);
-        MovementType = movementType;
-        ZoomMultiplier = zoomMultiplier;
-        LinearSpeed = linearSpeed;
-        InterpolateSpeed = interpolateSpeed;
-    }
-    public SequencePoint(Vector3 point, Vector3 rotation, CameraMovementType movementType, float zoomMultiplier = -1, float linearSpeed = -1, float interpolateSpeed = -1)
-    {
-        Point = point;
-        Rotation = rotation;
-        MovementType = movementType;
-        ZoomMultiplier = zoomMultiplier;
-        LinearSpeed = linearSpeed;
-        InterpolateSpeed = interpolateSpeed;
-    }
-    public Vector3 Point { get; }
-    public Vector3 Rotation { get; }
-    public CameraMovementType MovementType { get; }
-    public float ZoomMultiplier, LinearSpeed, InterpolateSpeed;
-
-    public Vector3 PointWithExtraDistance(float distance)
-    {
-        Vector3 ExtraDistance = new Vector3
-            (
-            Point.x > 0 ? distance : -distance,
-            Point.y > 0 ? distance : -distance,
-            Point.z > 0 ? distance : -distance
-            );
-        return Point + ExtraDistance;
-    }
-}
-
-/// <summary>
-/// Manages camera actions and movements.
-/// </summary>
 public class CameraActions : MonoBehaviour
 {
     #region MainFields
     public static CameraActions Main { get; private set; }
-
-    public CameraState Focus;
-    public CameraMovementType MovementType;
-
     private Transform _target, _player;
 
+    [Header("States")]
     [SerializeField]
-    private float _zoomMultiplier = 1, _linearSpeed = 1, _interpolateSpeed = 5f;
-
+    private Vector3 _startPoint;
     [SerializeField]
-    private Vector3 _offset = Vector3.zero;
+    private Vector3 _position1, _rotation1;
+    [SerializeField]
+    private Vector3 _position2, _rotation2;
+    [SerializeField]
+    private float _maxDist;
 
     public Transform Target
     {
@@ -108,53 +46,6 @@ public class CameraActions : MonoBehaviour
             return _player; 
         }
     }
-    public float ZoomMultiplier
-    {
-        get
-        {
-            return _zoomMultiplier;
-        }
-        set
-        {
-            if (value > 0)
-                _zoomMultiplier = value;
-        }
-    }
-    public float LinearSpeed
-    {
-        get
-        {
-            return _linearSpeed;
-        }
-        set
-        {
-            if (value > 0)
-                _linearSpeed = value;
-        }
-    }
-    public float InterpolateSpeed
-    {
-        get
-        {
-            return _interpolateSpeed;
-        }
-        set
-        {
-            if (value > 0)
-                _interpolateSpeed = value;
-        }
-    }
-    public Vector3 Offset
-    {
-        get => _offset;
-    }
-
-    #endregion
-
-    #region SequenceFields
-
-    private bool _sequenceIsRunning;
-    private readonly Queue<SequencePoint> Sequence = new Queue<SequencePoint>();
 
     #endregion
 
@@ -164,156 +55,53 @@ public class CameraActions : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_sequenceIsRunning)
-            return;
-
-        switch (Focus)
-        {
-            case CameraState.PLAYER:
-                Move(Player.position);
-                break;
-            case CameraState.TARGET:
-                Move(Target.position);
-                break;
-            default:
-                break;
-        }
+        Move();
+        Rotate();
     }
 
-    /// <summary>
-    /// Move the camera to the specified destination.
-    /// </summary>
-    /// <param name="destination">The destination position to move the camera to.</param>
-    private void Move(Vector3 destination)
+    private void Move()
     {
-        switch (MovementType)
-        {
-            case CameraMovementType.INTERPOLATION:
-                Interpolate();
-                break;
-            case CameraMovementType.LINEAR:
-                LinearMove();
-                break;
-            default:
-                Teleport();
-                break;
-        }
-        void Interpolate()
-        {
-            Vector3 interpolatedPosition = Vector3.Lerp(
-                transform.position,
-                destination + new Vector3(_offset.x, _offset.y * _zoomMultiplier, _offset.z),
-                1 - Mathf.Pow(0.5f, InterpolateSpeed * Time.deltaTime)
-            );
-            transform.position = interpolatedPosition;
-        }
-        void LinearMove()
-        {
-            transform.position += LinearSpeed * Time.deltaTime *
-                new Vector3(
-                    destination.x + _offset.x - transform.position.x,
-                    destination.y + _offset.y - transform.position.y,
-                    destination.z + _offset.z - transform.position.z
-                ).normalized;
-        }
-        void Teleport()
-        {
-            transform.position = new Vector3(
-                destination.x + _offset.x,
-                destination.y + _offset.y * _zoomMultiplier,
-                destination.z + _offset.z
-            );
-        }
-    }
-
-    /// <summary>
-    /// Rotate the camera to the specified rotation.
-    /// </summary>
-    /// <param name="rotationDestination">The destination rotation to rotate the camera to.</param>
-    private void Rotate(Vector3 rotationDestination)
-    {
-        Vector3 InterpolatedRotation = Vector3.Lerp
-        (
-            transform.rotation.eulerAngles,
-            rotationDestination,
-            1 - Mathf.Pow(0.5f, InterpolateSpeed * Time.deltaTime)
+        Vector3 mappedPosition = Vector3.Lerp(
+            _position1,
+            _position2,
+            Remap(Vector3.Distance(Player.position, _startPoint), 0, _maxDist)
         );
-        transform.rotation = Quaternion.Euler(InterpolatedRotation);
-    }
+        Vector3 interpolatedPosition = Vector3.Lerp(
+            transform.position,
+            mappedPosition,
+            1 - Mathf.Pow(0.5f, 2 * Time.deltaTime)
+        );
+        transform.position =interpolatedPosition;
 
-    /// <summary>
-    /// Add a sequence point to the camera sequence.
-    /// </summary>
-    /// <param name="point">The sequence point to add.</param>
-    public void AddSequencePoint(SequencePoint point)
-    {
-        Sequence.Enqueue(point);
-        if (_sequenceIsRunning)
-            return;
-
-        StartCoroutine(PlaySequence());
-    }
-
-    /// <summary>
-    /// Play the camera sequence.
-    /// </summary>
-    private IEnumerator PlaySequence()
-    {
-        _sequenceIsRunning = true;
-
-        CameraMovementType initialMovementType = MovementType;
-        float initialInterpolateSpeed = _interpolateSpeed;
-        float initialZoomMultiplier = _zoomMultiplier;
-        float initialLinearSpeed = _linearSpeed;
-
-        SequencePoint startPoint = Sequence.Dequeue();
-        Vector3 destination = startPoint.PointWithExtraDistance(1f);
-        Vector3 rotationDestination = startPoint.Rotation;
-        bool isFinishedPlaying = false;
-
-        MovementType = startPoint.MovementType;
-        InterpolateSpeed = startPoint.InterpolateSpeed;
-        ZoomMultiplier = startPoint.ZoomMultiplier;
-        LinearSpeed = startPoint.LinearSpeed;
-
-        while (true)
+        float Remap(float value, float minValue, float maxValue)
         {
-            if (isFinishedPlaying)
-            {
-                if (Sequence.Count == 0)
-                    break;
-
-                SequencePoint point = Sequence.Dequeue();
-                destination = point.PointWithExtraDistance(0.1f);
-                rotationDestination = startPoint.Rotation;
-                isFinishedPlaying = false;
-                MovementType = point.MovementType;
-            }
-            else if (Vector3.Distance(transform.position, destination + new Vector3(_offset.x, _offset.y * _zoomMultiplier, _offset.z)) < 0.1f)
-                isFinishedPlaying = true;
-
-            Move(destination);
-            if (startPoint.Rotation != new Vector3(-1, -1, -1))
-                Rotate(rotationDestination);
-            yield return null;
+            return Mathf.Clamp01((value - minValue) / (maxValue - minValue));
         }
-
-        MovementType = initialMovementType;
-        InterpolateSpeed = initialInterpolateSpeed;
-        ZoomMultiplier = initialZoomMultiplier;
-        LinearSpeed = initialLinearSpeed;
-        _sequenceIsRunning = false;
     }
+
+    private void Rotate()
+    {
+        Vector3 mappedRotation = Vector3.Lerp(
+            _rotation1,
+            _rotation2,
+            Remap(Vector3.Distance(_player.position, _startPoint), 0, _maxDist)
+        );
+
+        transform.rotation = Quaternion.Euler(mappedRotation);
+
+        float Remap(float value, float minValue, float maxValue)
+        {
+            return Mathf.Clamp01((value - minValue) / (maxValue - minValue));
+        }
+    }
+
 
     /// <summary>
     /// Shake the camera with the specified amount and time.
     /// </summary>
     /// <param name="amount">The amount of shake.</param>
     /// <param name="time">The duration of the shake.</param>
-    public void Shake(float amount, float time)
-    {
-        StartCoroutine(Shaker(amount, time));
-    }
+    public void Shake(float amount, float time) => StartCoroutine(Shaker(amount, time));
 
     /// <summary>
     /// Coroutine for shaking the camera.
@@ -331,4 +119,14 @@ public class CameraActions : MonoBehaviour
             timer += 0.04f;
         }
     }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(_startPoint, 0.5f);
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(_position1, 0.5f);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(_position2, 0.5f);
+    }
+
 }

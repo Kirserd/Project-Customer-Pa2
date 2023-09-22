@@ -6,6 +6,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
     {
         Early,
         Scheduled,
+        ScheduledImportant,
         Done,
         Late,
         Television
@@ -67,10 +68,15 @@ public class TaskStarter : MonoBehaviour, IInteractable
 
         if (_interval == DayCycle.TimeInterval.All)
             SetAvailabilityState(Availability.Television);
-        else if(PointManager.CompletionOrder.Contains((Data.TaskID, Data.IsGame)))
+        else if (PointManager.CompletionOrder.Contains((Data.TaskID, Data.IsGame)))
             SetAvailabilityState(Availability.Done);
         else if ((int)interval == (int)_interval)
-            SetAvailabilityState(Availability.Scheduled);
+        {
+            if(Data.IsGame)
+                SetAvailabilityState(Availability.Scheduled);
+            else
+                SetAvailabilityState(Availability.ScheduledImportant);
+        }
         else if ((int)interval < (int)_interval)
             SetAvailabilityState(Availability.Early);
         else if (_state != Availability.Done)
@@ -78,7 +84,9 @@ public class TaskStarter : MonoBehaviour, IInteractable
     }
     private void TryCreatingIcon(Availability state)
     {
-        if (_icon is not null || state != Availability.Scheduled && state != Availability.Television)
+        if (_icon is not null || state != Availability.Scheduled 
+            && state != Availability.Television 
+            && state != Availability.ScheduledImportant)
             return;
         if (_iconPrefab is null)
             return;
@@ -90,7 +98,9 @@ public class TaskStarter : MonoBehaviour, IInteractable
     public void SetAvailabilityState(Availability state)
     {
         _state = state;
-        if (state != Availability.Scheduled && state != Availability.Television)
+        if (state != Availability.Scheduled && 
+            state != Availability.ScheduledImportant && 
+            state != Availability.Television)
             TurnSelectabilityTo(false);
         else 
             TurnSelectabilityTo(true);
@@ -119,12 +129,6 @@ public class TaskStarter : MonoBehaviour, IInteractable
 
     public void Deselect()
     {
-        TryGetComponent(out Renderer renderer);
-
-        if (renderer is null)
-            return;
-
-        renderer.material.SetColor("_Color", Color.white);
         OnSelectionStateChanged?.Invoke(false);
 
         IsSelected = false;
@@ -138,12 +142,6 @@ public class TaskStarter : MonoBehaviour, IInteractable
         if (!IsActive)
             return;
 
-        TryGetComponent(out Renderer renderer);
-
-        if (renderer is null)
-            return;
-
-        renderer.material.SetColor("_Color", SelectionManager.Instance.SelectionColor);
         OnSelectionStateChanged?.Invoke(true);
 
         IsSelected = true;

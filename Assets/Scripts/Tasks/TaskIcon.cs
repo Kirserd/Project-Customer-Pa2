@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class TaskIcon : MonoBehaviour
@@ -14,6 +15,8 @@ public class TaskIcon : MonoBehaviour
     private bool _isFading;
     private bool _fadeDirection;
     private Material _material;
+
+    private bool _toBeDestroyed;
 
     private void Start()
     {
@@ -34,7 +37,15 @@ public class TaskIcon : MonoBehaviour
         Transform cameraTransform = Camera.main.transform;
         transform.rotation = Quaternion.LookRotation(cameraTransform.forward, cameraTransform.up);
     }
-    public void SetIcon(TaskStarter.Availability key) => GetComponent<SpriteRenderer>().sprite = Icons[key];
+    public void SetIcon(TaskStarter.Availability key)
+    {
+        if (key == TaskStarter.Availability.Done || key == TaskStarter.Availability.Late)
+        {
+            StartCoroutine(FadeDestroy());
+        }
+        GetComponent<SpriteRenderer>().sprite = Icons[key];
+    }
+
     public void Fade(bool state)
     {
         _isFading = true;
@@ -42,6 +53,9 @@ public class TaskIcon : MonoBehaviour
     }
     private void AnimateFade()
     {
+        if (_toBeDestroyed)
+            return;
+
         float opacity = _material.GetFloat("_Opacity");
         if (!_fadeDirection && opacity < 1f)
             _material.SetFloat("_Opacity", opacity + Time.deltaTime * 4f);
@@ -62,5 +76,21 @@ public class TaskIcon : MonoBehaviour
     {
         if (_isFading)
             AnimateFade();
+    
+        RotateToCamera();
+    }
+    private IEnumerator FadeDestroy()
+    {
+        AllTasksFade -= Fade;
+        _toBeDestroyed = true;
+        _material.SetFloat("_Opacity", 1);
+        yield return new WaitForSeconds(1.5f);
+        float opacity = _material.GetFloat("_Opacity");
+        while (opacity > 0f)
+        {
+            opacity = _material.GetFloat("_Opacity");
+            _material.SetFloat("_Opacity", opacity - Time.deltaTime * 2f);
+            yield return new WaitForEndOfFrame();
+        }
     }
 }

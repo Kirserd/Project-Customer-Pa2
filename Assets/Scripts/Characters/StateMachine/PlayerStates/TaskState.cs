@@ -23,8 +23,8 @@ public class TaskState : PlayerState
     }
     private void SetTaskInWorldUI(bool state)
     {
-        TaskIcon.AllTasksFade.Invoke(state);
-        TaskStarter.AllHintsAppear.Invoke(state);
+        TaskIcon.AllTasksFade?.Invoke(state);
+        TaskStarter.AllHintsAppear?.Invoke(state);
         _gameCamera.enabled = state;
     }
     private void SubscribeToInput()

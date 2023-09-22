@@ -36,6 +36,7 @@ public class Television : MonoBehaviour
     {
         SortProgrammes();
         RefreshComponents();
+        SetProgrammeTo(0);
     }
     private void RefreshComponents() => _renderer = GetComponent<SpriteRenderer>();
     private void SortProgrammes() => _programmes = _programmes.OrderBy(programme => (int)programme.Name).ToList();
@@ -49,15 +50,51 @@ public class Television : MonoBehaviour
         _currentProgram = _programmes[(int)programme];
         _renderer.sprite = _currentProgram.Image;
     }
-    public void SetProgrammeTo(int programmeId) => SetProgrammeTo((Programmes)programmeId);
-
-    public void StartProgramme()
+    public void SetProgrammeTo(int programmeId) 
     {
-        StartCoroutine(PlayProgramme());
+        AudioSource source = AudioManager.Source.transform.GetChild(0).GetComponent<AudioSource>();
+        switch (programmeId)
+        {
+            case 2:
+                source.clip = AudioManager.Clips["TV2"];
+                source.volume = 1f;
+                break;
+            case 3:
+                source.clip = AudioManager.Clips["TV3"];
+                source.volume = 1f;
+                break;
+            default:
+                source.clip = AudioManager.Clips["TV0"];
+                source.volume = 0.15f;
+                break;
+        }
+        source.Play();
+        SetProgrammeTo((Programmes)programmeId);
     }
-
-    private IEnumerator PlayProgramme()
+    public void NextChannel()
     {
-        yield return null;
+        if((int)_currentProgramName < 3)
+            SetProgrammeTo((int)_currentProgramName + 1);
+    }
+    public void PrevChannel()
+    {
+        if ((int)_currentProgramName > 0)
+            SetProgrammeTo((int)_currentProgramName - 1);
+    }
+    private void Update()
+    {
+        if (_currentProgramName == Programmes.None)
+            PointManager.StressPoints -= Time.deltaTime / 2f;
+        else if (_currentProgramName == Programmes.News)
+            PointManager.StressPoints += Time.deltaTime;
+        else if (_currentProgramName == Programmes.Soccer)
+        {
+            PointManager.StressPoints -= Time.deltaTime;
+        }
+        else
+        {
+            PointManager.ChildPoints += Time.deltaTime / 2f;
+            PointManager.StressPoints -= Time.deltaTime / 2f;
+        }
     }
 }

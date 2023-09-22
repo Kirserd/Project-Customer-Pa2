@@ -267,6 +267,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: TaskIcons_0
+      rect:
+        serializedVersion: 2
+        x: 737
+        y: 0
+        width: 108
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b42b0ac76d882bd4f9106259aa78900a
+      internalID: -1056033864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TaskIcons_1
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 2
+        width: 170
+        height: 175
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58bfb396bdd07cd488b14a3e22672d3a
+      internalID: 858786480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -280,9 +322,11 @@ TextureImporter:
     nameFileIdTable:
       3: 431703788
       0: 174486641
+      TaskIcons_0: -1056033864
       2: 701647107
       5: -1803284453
       4: -1701484498
+      TaskIcons_1: 858786480
       1: 646466648
   spritePackingTag: 
   pSDRemoveMatte: 0

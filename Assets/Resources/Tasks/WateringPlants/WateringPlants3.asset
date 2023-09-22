@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63dd6c4da468d494080f5b68138a98ce, type: 3}
+  m_Name: WateringPlants3
+  m_EditorClassIdentifier: 
+  Name: WateringPlants
+  Points: 15
+  IsGame: 0
+  TaskID: 9
+  TaskPrefab: {fileID: 5391278792660694881, guid: 7a8d9284b38c0b64d99a927239407319, type: 3}

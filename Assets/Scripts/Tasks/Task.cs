@@ -39,6 +39,7 @@ public abstract class Task
     }
     private void HandleOnStarted()
     {
+        AudioManager.Source.PlayOneShot(AudioManager.Clips["Interval"], 1f);
         Instance = this;
         Dad.PlayerStateMachine.UpdateState(new TaskState(Dad, _caller.Data));
         ClearNotifications();
@@ -49,7 +50,6 @@ public abstract class Task
             _caller.StartCoroutine(StressAccumulation());
         }
         Setup();
-
     }
     private void ClearNotifications()
     {
@@ -67,6 +67,10 @@ public abstract class Task
             Finalize();
             return;
         }
+
+        if (state == TaskStarter.Availability.Scheduled && !_caller.Data.IsGame)
+            state = TaskStarter.Availability.ScheduledImportant;
+
         _caller.SetAvailabilityState(state);
         Finalize();
 
@@ -74,6 +78,7 @@ public abstract class Task
         {
             _stressAccumulation = false;
             Dad.PlayerStateMachine.UpdateState(Dad.MovingState);
+            AudioManager.Source.PlayOneShot(AudioManager.Clips["Interval"], 1f);
 
             Clear();
             Reset();
@@ -134,6 +139,14 @@ public abstract class Task
         AudioManager.Source.volume = 1f;
         AudioManager.Source.loop = false;
         AudioManager.Source.Pause();
+
+        
+        AudioSource source = AudioManager.Source.transform.GetChild(0).GetComponent<AudioSource>();
+        if (source.clip != AudioManager.Clips["Lobby"])
+        {
+            source.clip = AudioManager.Clips["Lobby"];
+            source.Play();
+        }
 
         InitializeSubscriptions();
     }

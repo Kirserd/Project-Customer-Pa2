@@ -87,7 +87,7 @@ public class SelectionManager : MonoBehaviour
         for (int i = 0; i < selectables.Length; i++)
         {
             float distance = Vector3.Distance(selectables[i].GameObject.transform.position, transform.position);
-            if (distance < minDistance)
+            if (distance < minDistance && selectables[i].IsActive)
             {
                 minDistance = distance;
                 closest = selectables[i];

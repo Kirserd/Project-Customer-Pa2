@@ -9,6 +9,14 @@ public static class TaskArchive
         {TaskID.Television, new EmptyTask()},
         {TaskID.ToyBox, new ToyTask()},
         {TaskID.DrawingGame, new DrawingGameTask()},
+        { TaskID.WateringPlants2, new WateringPlantsTask() },
+        { TaskID.DoodleJump2, new DoodleJumpTask() },
+        { TaskID.ToyBox2, new ToyTask() },
+        { TaskID.DrawingGame2, new DrawingGameTask() },
+        { TaskID.WateringPlants3, new WateringPlantsTask() },
+        { TaskID.DoodleJump3, new DoodleJumpTask() },
+        { TaskID.ToyBox3, new ToyTask() },
+        { TaskID.DrawingGame3, new DrawingGameTask() },
     };
     public static Task GetTaskByID(TaskID id)
     {
@@ -17,4 +25,3 @@ public static class TaskArchive
         return null;
     }
 }
-

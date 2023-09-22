@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DrawingGame
   m_EditorClassIdentifier: 
   Name: DrawingGame
-  Points: 40
+  Points: 15
   IsGame: 1
   TaskID: 4
   TaskPrefab: {fileID: 2160883814700718615, guid: 135215ef649e7b340aeb3d6ed12fbaeb, type: 3}

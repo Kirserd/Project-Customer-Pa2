@@ -13,7 +13,7 @@ public class ResultDisplayer : MonoBehaviour
         Vector2 coordinates = PointManager.CalculateCoordinate();
         _point.localPosition = new Vector3(coordinates.x * 100, coordinates.y * 100, 0);
     
-        if(coordinates.x > 0 && coordinates.y < 0)
+        if(coordinates.x > 0 && coordinates.y > 0)
         {
             _name.text = "''Authoritative Parenting''";
             _desc.text = "Balanced and nurturing approach with clear guidelines and open communication. Discipline is supportive, with explanations. " +
@@ -22,7 +22,7 @@ public class ResultDisplayer : MonoBehaviour
             _minuses.text = "<b>Negative Points:</b>\n - Potential for Over-Parenting\n - Time-Intensive";
             _pluses.text = "<b>Positive Points:</b>\n + Emotional Regulation\n + Independence and Responsibility\n + High Self-Esteem and Academic Achievement";
         }
-        else if (coordinates.x <= 0 && coordinates.y < 0)
+        else if (coordinates.x <= 0 && coordinates.y > 0)
         {
             _name.text = "''Authoritarian Parenting''";
             _desc.text = "Strict, demanding approach with rigid rules and a focus on obedience. " +
@@ -32,7 +32,7 @@ public class ResultDisplayer : MonoBehaviour
             _minuses.text = "<b>Negative Points:</b>\n - Lack of Emotional Support\n - Reduced Creativity and Independence \n - Risk of Resentment and Rebellion";
             _pluses.text = "<b>Positive Points:</b>\n + Well-Behaved Behavior\n + Clear Boundaries\n + Respect for Authority";
         }
-        else if (coordinates.x <= 0 && coordinates.y >= 0)
+        else if (coordinates.x <= 0 && coordinates.y <= 0)
         {
             _name.text = "''Neglectful Parenting''";
             _desc.text = "Neglectful parenting, or uninvolved parenting, involves parental detachment and limited involvement in a child's life." +

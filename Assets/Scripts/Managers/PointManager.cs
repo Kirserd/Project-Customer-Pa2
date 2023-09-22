@@ -56,6 +56,7 @@ public static class PointManager
 
     public static List<(TaskID, bool)> CompletionOrder = new();
 
+
     public static void Start()
     {
         _childPoints = 0;
@@ -82,7 +83,7 @@ public static class PointManager
     {
         Vector2 result = Vector2.zero;
         float yUnMapped = _chorePoints;
-        result.y = -((Remap(yUnMapped, 0, 100) - 0.5f) * 2f);
+        result.y = -((Remap(yUnMapped, 0, 100) - 0.5f) * 2f) - GetAvgChildPro() * 0.2f;
 
         float avgStress = AllStress / StressIterations;
 

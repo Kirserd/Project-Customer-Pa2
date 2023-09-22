@@ -11,7 +11,7 @@ public enum FromSceneToScene
 }
 public class Teleport : MonoBehaviour, IInteractable
 {
-    private static FromSceneToScene _current = FromSceneToScene.LivingRoomToKitchen;
+    private static FromSceneToScene _current = FromSceneToScene.KitchenToLivingRoom;
     private static bool _placed = false;
     private static Dictionary<FromSceneToScene, Teleport> _spawns = new();
 
@@ -46,6 +46,7 @@ public class Teleport : MonoBehaviour, IInteractable
 
     public bool IsSelected { get => _isSelected; set => _isSelected = value; }
     private bool _isSelected;
+
     public void Deselect()
     {
         transform.localScale /= 1.05f;
@@ -60,12 +61,13 @@ public class Teleport : MonoBehaviour, IInteractable
         AudioManager.Source.PlayOneShot(AudioManager.Clips["OpenDoor"], 0.5f);
         ResetSubscriptions();
         SceneManager.LoadScene(_sceneNames[_current], LoadSceneMode.Single);
-        _current = _reverseFromTo[_fromTo];
+        _current = _reverseFromTo[_current];
         _placed = false;
     }
 
     private void ResetSubscriptions()
     {
+        ScreenEventListener.OnScreenSizeChanged = null;
         TaskIcon.AllTasksFade = null;
         TaskStarter.AllHintsAppear = null;
         DayCycle.OnTimeChanged = null;
@@ -85,14 +87,18 @@ public class Teleport : MonoBehaviour, IInteractable
     }
     private void Place()
     {
-        if (_placed)
+        if (_placed || _current != _fromTo)
             return;
 
         Task.RefreshReferences();
         Teleport spawn = _spawns[_current];
-        if (spawn is null)
-            return;
-        Task.Dad.transform.position = spawn.transform.position + spawn._spawnOffset;
+        Vector3 newPosition = new
+            (
+                spawn.transform.position.x + spawn._spawnOffset.x, 
+                Task.Dad.transform.position.y, 
+                spawn.transform.position.z + spawn._spawnOffset.z
+            );
+        Task.Dad.transform.position = newPosition;
         _placed = true;
     }
     private void OnDrawGizmos()

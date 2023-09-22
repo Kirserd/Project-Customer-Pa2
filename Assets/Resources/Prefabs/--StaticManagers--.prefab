@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 123720050762215031}
   - component: {fileID: 123720050762215029}
   - component: {fileID: 123720050762215030}
+  - component: {fileID: 4864927706817252559}
   - component: {fileID: 3117355333528359559}
   - component: {fileID: 8950815293719666184}
   m_Layer: 0
@@ -107,6 +108,19 @@ MonoBehaviour:
     - Standard
     values:
     - {fileID: 2800000, guid: 4fe3fb9aa2f127b4986f4d6c61b641b2, type: 3}
+--- !u!114 &4864927706817252559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123720050762215019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 319c2c3a6bb760a418f6ddf6ac531fdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tutorialPrefab: {fileID: 4248911769810601117, guid: 58c7ac163ae9f4345962d69e223386f4, type: 3}
 --- !u!114 &3117355333528359559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +158,9 @@ MonoBehaviour:
     - GB
     - MainMenu
     - EndScreen
+    - TV0
+    - TV2
+    - TV3
     values:
     - {fileID: 8300000, guid: 9ba72cb38fb997343bcd517d3c09af71, type: 3}
     - {fileID: 8300000, guid: 24ca178608129a44b918bc45d9b07053, type: 3}
@@ -168,6 +185,9 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 1258c584235976c43b5724a3e9054768, type: 3}
     - {fileID: 8300000, guid: 738b1e905e8239747bdc95d078d866ab, type: 3}
     - {fileID: 8300000, guid: 49a8f8daef1a31740a74973be82919d0, type: 3}
+    - {fileID: 8300000, guid: b342d1f97602c4f4bb69468f75cc1419, type: 3}
+    - {fileID: 8300000, guid: 0fa8b94e96f5dc8478096b2d5684d39f, type: 3}
+    - {fileID: 8300000, guid: 9a36dd1c409d11c4489e7b13619777f5, type: 3}
 --- !u!82 &8950815293719666184
 AudioSource:
   m_ObjectHideFlags: 0

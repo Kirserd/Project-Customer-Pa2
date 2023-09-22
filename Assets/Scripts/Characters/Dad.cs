@@ -14,6 +14,9 @@ public class Dad : MonoBehaviour
     private Vector3 _castOrigin;
     private IInteractable _closestInteractable;
 
+    [SerializeField]
+    private Animator _animator;
+
     [HideInInspector]
     public IInteractable ClosestInteractable
     {
@@ -98,6 +101,7 @@ public class Dad : MonoBehaviour
         if (ClosestInteractable is null || state == ButtonState.Hold || PlayerStateMachine.CurrentState != MovingState)
             return;
 
+        _animator.SetTrigger("PickUp");
         ClosestInteractable.Interact();
     }
     public void Shout()

@@ -6,7 +6,6 @@ using UnityEngine;
 /// </summary>
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Animator))]
 public class Movement : MonoBehaviour
 {
     [Header("Parameters")]
@@ -18,6 +17,7 @@ public class Movement : MonoBehaviour
     private float _rotationSpeed;
 
     private Rigidbody _rigidbody;
+    [SerializeField]
     private Animator _animator;
     private Vector3 _direction;
 
@@ -35,7 +35,6 @@ public class Movement : MonoBehaviour
     public void RefreshComponents()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _animator = GetComponent<Animator>();
     }
 
     /// <summary>
@@ -64,7 +63,7 @@ public class Movement : MonoBehaviour
     private void Step()
     {
         _stepCounter += Time.fixedDeltaTime;
-        if(_stepCounter >= 0.35f)
+        if(_stepCounter >= 0.59f)
         {
             _stepCounter = 0f;
             if(_stepRight)
@@ -102,6 +101,6 @@ public class Movement : MonoBehaviour
     /// </summary>
     private void Animate()
     {
-       // _animator.SetFloat("Speed", _rigidbody.velocity.magnitude);
+       _animator.SetFloat("Speed", _rigidbody.velocity.magnitude + 0.1f);
     }
 }
