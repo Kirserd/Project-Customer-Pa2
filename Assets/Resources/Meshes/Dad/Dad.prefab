@@ -1163,6 +1163,7 @@ MonoBehaviour:
   _castRadius: 4
   _castOrigin: {x: 0, y: 0, z: 0}
   _animator: {fileID: 7650438489243458288}
+  _shoutNotification: {fileID: 5951209840617316735, guid: 5d5198fc09c14d04fb543aabc888b721, type: 3}
 --- !u!95 &7650438489243458288
 Animator:
   serializedVersion: 4

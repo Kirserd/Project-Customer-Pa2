@@ -17,6 +17,9 @@ public class Dad : MonoBehaviour
     [SerializeField]
     private Animator _animator;
 
+    [SerializeField]
+    private GameObject _shoutNotification;
+
     [HideInInspector]
     public IInteractable ClosestInteractable
     {
@@ -106,7 +109,7 @@ public class Dad : MonoBehaviour
     }
     public void Shout()
     {
-
+        Instantiate(_shoutNotification, GameObject.FindGameObjectWithTag("Notifications").transform);
     }
 
     private void OnDrawGizmos()
