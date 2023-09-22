@@ -15,5 +15,6 @@ MonoBehaviour:
   Name: ToyBox
   Points: 15
   IsGame: 0
-  TaskID: 3
+  TaskID: 2
   TaskPrefab: {fileID: 6251705123717054099, guid: bf5f1e937f97d884f962978f333f494a, type: 3}
+  TutorialPrefab: {fileID: 5201304076148418050, guid: 834b24852bd50cd4ab1b8ef692c8db6e, type: 3}

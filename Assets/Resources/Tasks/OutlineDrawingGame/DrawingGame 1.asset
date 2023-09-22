@@ -15,5 +15,6 @@ MonoBehaviour:
   Name: DrawingGame
   Points: 15
   IsGame: 1
-  TaskID: 8
+  TaskID: 7
   TaskPrefab: {fileID: 2160883814700718615, guid: 135215ef649e7b340aeb3d6ed12fbaeb, type: 3}
+  TutorialPrefab: {fileID: 2596561803936616406, guid: 0e0904772bb28f24380bd4463a4a1c58, type: 3}

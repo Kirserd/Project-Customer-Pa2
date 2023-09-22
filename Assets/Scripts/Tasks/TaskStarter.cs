@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class TaskStarter : MonoBehaviour, IInteractable
 {
@@ -55,6 +57,8 @@ public class TaskStarter : MonoBehaviour, IInteractable
 
     public delegate void OnSelectionStateChangedHandler(bool state);
     public OnSelectionStateChangedHandler OnSelectionStateChanged;
+
+    public static List<Type> TutorialsPassed = new();
 
     private void Awake()
     {
@@ -181,4 +185,7 @@ public class TaskStarter : MonoBehaviour, IInteractable
         Instantiate(_legendaPrefab, Task.TaskGUI);
         return Instantiate(_data.TaskPrefab, transform);
     }
+
+    public GameObject InstantiateTutorial() => Instantiate(Data.TutorialPrefab);
+
 }

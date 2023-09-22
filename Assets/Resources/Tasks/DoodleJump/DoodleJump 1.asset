@@ -15,5 +15,6 @@ MonoBehaviour:
   Name: DoodleJump
   Points: 15
   IsGame: 1
-  TaskID: 6
+  TaskID: 5
   TaskPrefab: {fileID: 6453203295885161504, guid: f7f928c980f6d5644b4c86f597f65df7, type: 3}
+  TutorialPrefab: {fileID: 2712761619047565077, guid: 3b2b5853da8e80841a2c581d2ab41648, type: 3}

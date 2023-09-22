@@ -15,5 +15,6 @@ MonoBehaviour:
   Name: WateringPlants
   Points: 15
   IsGame: 0
-  TaskID: 5
+  TaskID: 4
   TaskPrefab: {fileID: 5391278792660694881, guid: 7a8d9284b38c0b64d99a927239407319, type: 3}
+  TutorialPrefab: {fileID: 429132723214996133, guid: 89a839d3ea476334cb6555249d8c84da, type: 3}

@@ -38,7 +38,7 @@ public abstract class Task
         TaskGUI = GameObject.FindGameObjectWithTag("TaskGUI").transform;
     }
     private void HandleOnStarted()
-    {
+    {   
         AudioManager.Source.PlayOneShot(AudioManager.Clips["Interval"], 1f);
         Instance = this;
         Dad.PlayerStateMachine.UpdateState(new TaskState(Dad, _caller.Data));
@@ -50,6 +50,13 @@ public abstract class Task
             _caller.StartCoroutine(StressAccumulation());
         }
         Setup();
+        Debug.Log(TaskStarter.TutorialsPassed.Contains(_caller.Data.Task.GetType()));
+        if (!TaskStarter.TutorialsPassed.Contains(_caller.Data.Task.GetType()) && _caller.Data.TutorialPrefab != null)
+        {
+            Debug.Log(_caller.Data.Task.GetType());
+            TaskStarter.TutorialsPassed.Add(_caller.Data.Task.GetType());
+            _caller.InstantiateTutorial();
+        }
     }
     private void ClearNotifications()
     {
